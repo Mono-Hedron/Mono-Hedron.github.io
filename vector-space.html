@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <title>벡터 공간 - 수학 공책</title>
+
+    <link href="/lib/nested-sketch/nested-sketch.css" rel="stylesheet" type="text/css"/>
+    <link href="/lib/katex/katex.css" rel="stylesheet" type="text/css"/>
+    <link href="/stylesheets/math.css" rel="stylesheet" type="text/css"/>
+    <link href="/stylesheets/style.css" rel="stylesheet" type="text/css"/>
+
+    <script type="importmap">
+		{
+		  "imports": {
+                "dompurify": "./lib/dompurify/purify.es.mjs",
+                "marked": "./lib/marked/marked.esm.js",
+                "katex": "./lib/katex/katex.mjs",
+                "auto-render": "./lib/katex/contrib/auto-render.mjs"
+		  }
+		}
+	</script>
+    
+	<script type='module' src="/lib/nested-sketch/nested-sketch.js"></script>
+</head>
+<body>
+    <!-- header -->
+    <header><a href="/">처음으로</a></header>
+    
+    <!-- contents -->
+    <h1>벡터 공간</h1>
+    <hr>
+    <h2 id="vector-space-axiom">벡터 공간 공리</h2>
+    <p>
+        <!-- 실수 체 -->
+       모든 $\mathbf{u},\mathbf{v},\mathbf{w} \in V$와 모든 스칼라 $k, l$에 대해 다음을 만족하는,
+        덧셈과 스칼라곱이 정의된 공집합이 아닌 집합 $V$를 <strong>벡터 공간</strong>,
+        $V$의 원소를 <strong>벡터</strong>라고 한다.
+    </p>
+    <div data-flush-left="0">
+        <ol>
+            <li id="axiom-1">$$\mathbf{u}+\mathbf{v} \in V$$</li>
+            <li id="axiom-2">$$\mathbf{u}+\mathbf{v}=\mathbf{v}+\mathbf{u}$$</li>
+            <li id="axiom-3">$$\mathbf{u}+(\mathbf{v}+\mathbf{w})=(\mathbf{u}+\mathbf{v})+\mathbf{w}$$</li>
+            <li id="axiom-4">$$\exists \mathbf{0} \in V \quad \text{s.t.} \quad \mathbf{u}+\mathbf{0}=\mathbf{u}$$</li>
+            <li id="axiom-5">$$\exists -\mathbf{u} \in V \quad \text{s.t.} \quad  \mathbf{u}+(-\mathbf{u})=\mathbf{0}$$</li>
+            <li id="axiom-6">$$ k\mathbf{u} \in V$$</li>
+            <li id="axiom-7">$$k(\mathbf{u}+\mathbf{v})=k\mathbf{u}+k\mathbf{v}$$</li>
+            <li id="axiom-8">$$(k+l)\mathbf{u}=k\mathbf{u}+l\mathbf{u}$$</li>
+            <li id="axiom-9">$$k(l\mathbf{u})=(kl)\mathbf{u}$$</li>
+            <li id="axiom-10">$$1\mathbf{u}=\mathbf{u}$$</li>
+        </ol> 
+    </div>
+    
+    <h2 id="properties-of-vector-space">벡터 공간의 성질</h2>
+    <p>
+        <span id="property-declaration">$\mathbf{u}$가 <a href="#vector-space-axiom" class="ns-link">벡터 공간</a> $V$의 벡터이고 $k$가 스칼라일 때,</span>
+        <span id="property-1" data-declaration="property-declaration">$$0\mathbf{u}=\mathbf{0} \tag{\href{#property-1-proof}{\text{증명}}}$$</span>
+        <span id="property-2" data-declaration="property-declaration">$$k\mathbf{0}=\mathbf{0} \tag{\href{#property-2-proof}{\text{증명}}}$$</span>
+        <span id="property-3" data-declaration="property-declaration">$$(-1)\mathbf{u}=-\mathbf{u} \tag{\href{#property-3-proof}{\text{증명}}}$$</span>
+    </p>
+    <h6 id="property-1-proof" class="ns-link ns-hidden">증명</h3>
+    <p data-flush-left>
+        $$0\mathbf{u}\href{#axiom-4}{=}0\mathbf{u}+\mathbf{0}$$
+        $$\phantom{0\mathbf{u}}\href{#axiom-5}{=}0\mathbf{u}+[0\mathbf{u}+(-0\mathbf{u})]$$
+        $$\phantom{0\mathbf{u}}\href{#axiom-3}{=}[0\mathbf{u}+0\mathbf{u}]+(-0\mathbf{u})$$
+        $$\phantom{0\mathbf{u}}\href{#axiom-8}{=}[0+0]\mathbf{u}+(-0\mathbf{u})$$
+        $$\phantom{0\mathbf{u}}=0\mathbf{u}+(-0\mathbf{u})$$
+        $$\phantom{0\mathbf{u}}\href{#axiom-5}{=}\mathbf{0}$$
+    </p>
+    <h6 id="property-2-proof" class="ns-link ns-hidden">증명</h3>
+    <p data-flush-left>
+        $$k\mathbf{0}\href{#axiom-4}{=}k\mathbf{0}+\mathbf{0}$$
+        $$\phantom{k\mathbf{0}}\href{#axiom-5}{=}k\mathbf{0}+[k\mathbf{0}+(-k\mathbf{0})]$$
+        $$\phantom{k\mathbf{0}}\href{#axiom-3}{=}[k\mathbf{0}+k\mathbf{0}]+(-k\mathbf{0})$$
+        $$\phantom{k\mathbf{0}}\href{#axiom-7}{=}k[\mathbf{0}+\mathbf{0}]+(-k\mathbf{0})$$
+        $$\phantom{k\mathbf{0}}\href{#axiom-4}{=}k\mathbf{0}+(-k\mathbf{0})$$
+        $$\phantom{k\mathbf{0}}\href{#axiom-5}{=}\mathbf{0}$$
+    </p>
+    <h6 id="property-3-proof" class="ns-link ns-hidden">증명</h3>
+    <p data-flush-left>
+        $$(-1)\mathbf{u}=-\mathbf{u} \quad \href{#axiom-5}{\iff} \quad \mathbf{u}+(-1)\mathbf{u}=\mathbf{0}$$
+        $$\therefore$$
+        <!-- 유일성? -->
+        $$\mathbf{u}+(-1)\mathbf{u}\href{#axiom-10}{=}1\mathbf{u}+(-1)\mathbf{u}$$
+        $$\phantom{\mathbf{u}+(-1)\mathbf{u}}\href{#axiom-8}{=}[1+(-1)]\mathbf{u}$$
+        $$\phantom{\mathbf{u}+(-1)\mathbf{u}}=0\mathbf{u}$$
+        $$\phantom{\mathbf{u}+(-1)\mathbf{u}}\href{#property-1}{=}\mathbf{0}$$
+    </p>
+    <h2>용어</h2>
+    <ul>
+        <li>공리 axiom</li>
+        <li>덧셈 addition</li>
+        <li>벡터 vector</li>
+        <li>벡터 공간 vector space</li>
+        <li>스칼라 scalar</li>
+        <li>스칼라곱 scalar multiplication</li>
+        <li>원소 element</li>
+        <li>집합 set</li>
+    </ul>
+    
+    <!-- footer -->
+    <footer><a href="/third-party-notice.html">오픈소스 라이선스 고지</a></footer>
+</body>
+</html>

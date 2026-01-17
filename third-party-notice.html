@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Third Party Notice - 수학 공책</title>
+
+  <link href="/stylesheets/style.css" rel="stylesheet" type="text/css"/>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "dompurify": "./lib/dompurify/purify.es.mjs",
+      "marked": "./lib/marked/marked.esm.js"
+    }
+  }
+  </script>
+</head>
+<body>
+  <!-- header -->
+  <header><a href="/">처음으로</a></header>
+  
+  <div id="content"></div>
+
+  <script type="module">
+    import { parse } from 'marked'
+    import DOMPurify from 'dompurify';
+
+    async function loadNotice() {
+      try {
+        const response = await fetch('third-party-notice.md');
+        if (!response.ok) throw new Error('Failed to load license file');
+
+        const markdown = await response.text();
+        const rawHtml = parse(markdown); 
+        const cleanHtml = DOMPurify.sanitize(rawHtml);
+        
+        document.getElementById('content').innerHTML = cleanHtml;
+      } catch {
+        document.getElementById('content').innerHTML = '<p>Error on loading notices. Please check the <a href="">GitHub repository</a>.</p>';
+      }
+    }
+
+    loadNotice();
+  </script>
+</body>
+</html>

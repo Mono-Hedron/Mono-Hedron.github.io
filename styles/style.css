@@ -1,0 +1,32 @@
+body {
+    line-height: 1.6; 
+    font-family: sans-serif; 
+    max-width: 800px; 
+    margin: 40px auto; 
+    padding: 0 20px; 
+}
+h2 { 
+    border-bottom: 1px solid #eee; 
+    padding-bottom: 10px; 
+}
+
+
+header {
+  border-bottom: 2px solid #eee; 
+  padding-bottom: 10px; 
+  
+}
+header a {
+  color: dodgerblue;
+  font-size: 0.8rem;
+}
+
+footer {
+  border-top: 2px solid #eee; 
+  padding-top: 10px; 
+  
+}
+footer a {
+  color: dodgerblue;
+  font-size: 0.8rem;
+}

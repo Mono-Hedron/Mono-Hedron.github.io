@@ -132,6 +132,10 @@ BUBBLES:
 .nutshell-bubble-overflow-section > div{
     margin: 1em 0; /* if you people forgot to put your text in <p>'s -_- */
 }
+/* [TEST] X-scroll */
+/* .nutshell-bubble-overflow-section > div > *:not(.nutshell-bubble-from){
+    overflow-x: auto;
+} */
 .nutshell-bubble-overflow-section img{
     max-width:100%; /* so it fits */
 }
@@ -254,6 +258,11 @@ CLOSE ALL NUTSHELLS
 
 
 /* [MODIFIED] */
+/* [TEST] X-scroll */
+/* .katex {
+    overflow-x: auto;
+} */
+
 /* Make katex link focusable */
 .katex-html a.nutshell-link {
         position: relative !important;
@@ -275,7 +284,7 @@ CLOSE ALL NUTSHELLS
 /* flush-left */
 [data-flush-left] {
     --math-align: left;
-    --math-padding: 2em;
+    --math-padding: 1em;
 }
 
 /* flush-left with zero padding */

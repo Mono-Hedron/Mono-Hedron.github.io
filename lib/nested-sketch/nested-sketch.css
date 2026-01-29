@@ -1,6 +1,6 @@
 /*
  * Nested Sketch
- * Copyright 2026 Mono-Hedron. All rights reserved.
+ * Copyright 2026. Mono-Hedron. All rights reserved.
  * 
  * This project is a customized version of "Nutshell" v1.0.8 originally created by Nicky Case.
  * https://ncase.me/nutshell/

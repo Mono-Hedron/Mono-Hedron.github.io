@@ -7,7 +7,7 @@ This project makes use of the following open source libraries:
 * **Original Author**: Nicky Case ([ncase.me/nutshell](https://ncase.me/nutshell/))
 * **Original License**: CC0 1.0 Universal (Public Domain)
 * **Source**: [https://github.com/ncase/nutshell](https://github.com/ncase/nutshell)
-* **Modifications**: All right reserved.
+* **Modifications**: All rights reserved.
 * **Note**: The code has been modified from the original version for \[Class-based triggers, Math formula rendering, Math-link, Style adjustment] and renamed nested-sketch to avoid confusion with the original version.
 
 ---

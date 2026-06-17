@@ -56,9 +56,11 @@
     <h2 id="properties-of-vector-space">벡터 공간의 성질</h2>
     <p>
         <span id="property-declaration">$\mathbf{u}$가 <a href="#vector-space-axiom" class="ns-link">벡터 공간</a> $V$의 벡터이고 $k$가 스칼라일 때,</span>
-        <span id="property-1" data-declaration="property-declaration">$$0\mathbf{u}=\mathbf{0} \tag{\href{#property-1-proof}{\text{증명}}}$$</span>
+        <span id="property-declaration-witout-k" class="ns-hidden">$\mathbf{u}$가 <a href="#vector-space-axiom" class="ns-link">벡터 공간</a> $V$의 벡터일 때,</span>
+        
+        <span id="property-1" data-declaration="property-declaration-witout-k">$$0\mathbf{u}=\mathbf{0} \tag{\href{#property-1-proof}{\text{증명}}}$$</span>
         <span id="property-2" data-declaration="property-declaration">$$k\mathbf{0}=\mathbf{0} \tag{\href{#property-2-proof}{\text{증명}}}$$</span>
-        <span id="property-3" data-declaration="property-declaration">$$(-1)\mathbf{u}=-\mathbf{u} \tag{\href{#property-3-proof}{\text{증명}}}$$</span>
+        <span id="property-3" data-declaration="property-declaration-witout-k">$$(-1)\mathbf{u}=-\mathbf{u} \tag{\href{#property-3-proof}{\text{증명}}}$$</span>
     </p>
     <h6 id="property-1-proof" class="ns-link ns-hidden">증명</h3>
     <p data-flush-left>
@@ -80,7 +82,7 @@
     </p>
     <h6 id="property-3-proof" class="ns-link ns-hidden">증명</h3>
     <p data-flush-left>
-        $$(-1)\mathbf{u}=-\mathbf{u} \quad \href{#axiom-5}{\iff} \quad \mathbf{u}+(-1)\mathbf{u}=\mathbf{0}$$
+        $$(-1)\mathbf{u}=-\mathbf{u} \; \href{#axiom-5}{\Leftrightarrow} \; \mathbf{u}+(-1)\mathbf{u}=\mathbf{0}$$
         $$\therefore$$
         <!-- 유일성? -->
         $$\mathbf{u}+(-1)\mathbf{u}\href{#axiom-10}{=}1\mathbf{u}+(-1)\mathbf{u}$$
@@ -99,7 +101,6 @@
         <li>원소 element</li>
         <li>집합 set</li>
     </ul>
-    
     <!-- footer -->
     <footer><a href="/third-party-notice.html">오픈소스 라이선스 고지</a></footer>
 </body>

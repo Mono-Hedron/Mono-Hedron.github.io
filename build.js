@@ -18,6 +18,7 @@ mkdirSync(distDir);
 
 
 const importmap = readFileSync(join(compDir, 'importmap.html'), 'utf8');
+const nsImport = readFileSync(join(compDir, 'ns-import.html'), 'utf8');
 const header = readFileSync(join(compDir, 'header.html'), 'utf8');
 const footer = readFileSync(join(compDir, 'footer.html'), 'utf8');
 
@@ -36,6 +37,7 @@ readdirSync(srcDir).forEach(item => {
 
         let content = readFileSync(srcPath, 'utf8');
         content = content.replace('<!-- BUILD-PLACEHOLDER:IMPORTMAP -->', importmap);
+        content = content.replace('<!-- BUILD-PLACEHOLDER:NS-IMPORT -->', nsImport);
         content = content.replace('<!-- BUILD-PLACEHOLDER:HEADER -->', header);
         content = content.replace('<!-- BUILD-PLACEHOLDER:FOOTER -->', footer);
         
@@ -48,10 +50,11 @@ readdirSync(srcDir).forEach(item => {
 const root_files = [
     'third-party-notice.md',
     'favicon.ico',
+    'lib',
 ]
-root_files.forEach((filename)=>{
-    const filePath = join(__dirname, filename);
-    const filePathDist = join(distDir, filename)
-    cpSync(filePath, filePathDist)
-    console.log(`Root file copy: dist/${filename}`);
+root_files.forEach((name)=>{
+    const filePath = join(__dirname, name);
+    const filePathDist = join(distDir, name)
+    cpSync(filePath, filePathDist, { recursive: true })
+    console.log(`Root file copy: dist/${name}`);
 })

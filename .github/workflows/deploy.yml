@@ -1,20 +1,16 @@
 name: Deploy to GitHub Pages
 
 on:
-  # main(또는 master) 브랜치에 코드가 push될 때마다 작업 실행
   push:
     branches: ["main"]
 
-  # GitHub 웹페이지에서 수동으로 실행할 수 있도록 허용
   workflow_dispatch:
 
-# GitHub Pages 배포를 위한 쓰기 권한 설정
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# 여러 빌드가 동시에 돌 때 충돌 방지 및 대기 처리
 concurrency:
   group: "pages"
   cancel-in-progress: true
@@ -41,7 +37,6 @@ jobs:
       - name: Build Project
         run: npm run build
 
-      # 빌드 결과물 폴더인 dist/ 를 GitHub Pages 업로드 대상으로 지정
       - name: Upload Build Artifact
         uses: actions/upload-pages-artifact@v3
         with:

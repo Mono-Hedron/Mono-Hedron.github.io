@@ -1,14 +1,25 @@
-import { existsSync, rmSync, mkdirSync, readFileSync, readdirSync, statSync, cpSync, writeFileSync } from 'fs';
-import { join, extname, dirname} from 'path';
+import { existsSync, rmSync, mkdirSync, readFileSync, readdirSync, statSync, cpSync, writeFileSync, copyFileSync } from 'fs';
+import { join, extname, dirname, sep, relative} from 'path';
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename)
 
+// Folder name
+const COMPONENTS = 'components'
+// Placeholders
+const ROOT_PH = '{{ROOT}}'
+
+
 
 const srcDir = join(__dirname, 'src');
 const distDir = join(__dirname, 'dist');
-const compDir = join(srcDir, 'components');
+const compDir = join(srcDir, COMPONENTS);
+
+const importmap = readFileSync(join(compDir, 'importmap.html'), 'utf8');
+const nsImport = readFileSync(join(compDir, 'ns-import.html'), 'utf8');
+const header = readFileSync(join(compDir, 'header.html'), 'utf8');
+const footer = readFileSync(join(compDir, 'footer.html'), 'utf8');
 
 
 if (existsSync(distDir)) {
@@ -17,36 +28,54 @@ if (existsSync(distDir)) {
 mkdirSync(distDir);
 
 
-const importmap = readFileSync(join(compDir, 'importmap.html'), 'utf8');
-const nsImport = readFileSync(join(compDir, 'ns-import.html'), 'utf8');
-const header = readFileSync(join(compDir, 'header.html'), 'utf8');
-const footer = readFileSync(join(compDir, 'footer.html'), 'utf8');
+function buildDirectory(currentSrcDir, currentDistDir) {
+    if (!existsSync(currentDistDir)) mkdirSync(currentDistDir);
+
+    readdirSync(currentSrcDir).forEach(item => {
+        const currentSrcPath = join(currentSrcDir, item);
+        const distPath = join(currentDistDir, item);
+
+        if (item === COMPONENTS) return;
+
+        if (statSync(currentSrcPath).isDirectory()) {
+            buildDirectory(currentSrcPath, distPath);
+        } else {
+            if (extname(item) === '.html') {
+                const relativeFromSrc = relative(srcDir, currentSrcDir);
+                
+                let rootPath = '.';
+                if (relativeFromSrc) {
+                    const depth = relativeFromSrc.split(sep).length;
+                    rootPath = Array(depth).fill('..').join('/');
+                }
+
+                const localImportmap = importmap.replaceAll(ROOT_PH, rootPath);
+                const localNsImport = nsImport.replace(ROOT_PH, rootPath);
+                const localHeader = header.replaceAll(ROOT_PH, rootPath);
+                const localFooter = footer.replaceAll(ROOT_PH, rootPath);
+                
+                let content = readFileSync(currentSrcPath, 'utf8');
+
+                content = content.replace('<!-- BUILD-PLACEHOLDER:IMPORTMAP -->', localImportmap);
+                content = content.replace('<!-- BUILD-PLACEHOLDER:NS-IMPORT -->', localNsImport);
+                content = content.replace('<!-- BUILD-PLACEHOLDER:HEADER -->', localHeader);
+                content = content.replace('<!-- BUILD-PLACEHOLDER:FOOTER -->', localFooter);
+                
+                content = content.replaceAll(ROOT_PH, rootPath);
+
+                writeFileSync(distPath, content, 'utf8');
+                console.log(`HTML Build: ${relative(__dirname, distPath)} (Root: ${rootPath})`);
+            } else {
+                copyFileSync(currentSrcPath, distPath);
+            }
+        }
+    });
+}
+
+buildDirectory(srcDir, distDir);
 
 
-readdirSync(srcDir).forEach(item => {
-    const srcPath = join(srcDir, item);
-    const distPath = join(distDir, item);
-
-
-    if (item === 'components') return;
-
-    if (statSync(srcPath).isDirectory()) {
-        cpSync(srcPath, distPath, { recursive: true });
-        console.log(`Folder copy: dist/${item}`);
-    } else if (extname(item) === '.html') {
-
-        let content = readFileSync(srcPath, 'utf8');
-        content = content.replace('<!-- BUILD-PLACEHOLDER:IMPORTMAP -->', importmap);
-        content = content.replace('<!-- BUILD-PLACEHOLDER:NS-IMPORT -->', nsImport);
-        content = content.replace('<!-- BUILD-PLACEHOLDER:HEADER -->', header);
-        content = content.replace('<!-- BUILD-PLACEHOLDER:FOOTER -->', footer);
-        
-        writeFileSync(distPath, content, 'utf8');
-        console.log(`HTML build: dist/${item}`);
-    }
-});
-
-// Root files
+// Root folder files
 const root_files = [
     'third-party-notice.md',
     'favicon.ico',

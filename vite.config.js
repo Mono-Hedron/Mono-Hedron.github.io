@@ -3,7 +3,6 @@ import { join, dirname, relative, sep } from 'path';
 import { readFileSync, readdirSync, statSync } from 'fs';
 import { fileURLToPath } from 'url';
 
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -17,7 +16,7 @@ function getHtmlEntries(dir, allEntries = {}) {
   const files = readdirSync(dir);
   files.forEach(file => {
     const fullPath = join(dir, file);
-    if (file === 'components') return;
+    if (file === 'components' || file === 'assets') return;
     
     if (statSync(fullPath).isDirectory()) {
       getHtmlEntries(fullPath, allEntries);
@@ -33,9 +32,8 @@ function getHtmlEntries(dir, allEntries = {}) {
 export default defineConfig({
   base: '/',
   root: join(__dirname, 'src'), 
-  
+  publicDir: join(__dirname, 'public'),
   plugins: [
-
     {
       name: 'html-placeholder-replacer',
       transformIndexHtml(html, ctx) {

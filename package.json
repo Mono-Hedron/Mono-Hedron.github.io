@@ -8,7 +8,8 @@
     "eslint": "^10.5.0",
     "globals": "^17.6.0",
     "vite": "^8.0.16",
-    "vite-plugin-html-prerender": "^0.0.1"
+    "vite-plugin-html-prerender": "^0.0.1",
+    "vite-plugin-static-copy": "^4.1.1"
   },
   "scripts": {
     "dev": "vite",

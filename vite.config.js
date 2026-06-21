@@ -17,7 +17,7 @@ function getHtmlEntries(dir, allEntries = {}) {
   const files = readdirSync(dir);
   files.forEach(file => {
     const fullPath = join(dir, file);
-    if (file === 'components' || file === 'assets') return;
+    if (file === 'components') return;
     
     if (statSync(fullPath).isDirectory()) {
       getHtmlEntries(fullPath, allEntries);

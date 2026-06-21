@@ -11,11 +11,15 @@ export function purifyHTML(rawHTML, baseURL){
     // Hook for class, id 
     DOMPurify.addHook('afterSanitizeAttributes', (node) => {
         // Leave ns-link class
+        const ALLOWED_CLASSES = ['ns-link', 'ns-hidden'];
+
         if (node.hasAttribute && node.hasAttribute('class')) {
-            if (node.classList.contains('ns-link')) {
-                node.setAttribute('class', 'ns-link');
-            } 
-            else {
+            const filteredClasses = Array.from(node.classList)
+            .filter(className => ALLOWED_CLASSES.includes(className));
+            
+            if (filteredClasses.length > 0) {
+            node.setAttribute('class', filteredClasses.join(' '));
+            } else {
                 node.removeAttribute('class');
             }
         }

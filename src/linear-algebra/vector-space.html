@@ -46,7 +46,8 @@
         
         <span id="property-1" data-declaration="property-declaration-witout-k">$$0\mathbf{u}=\mathbf{0} \tag{\href{#property-1-proof}{\text{증명}}}$$</span>
         <span id="property-2" data-declaration="property-declaration">$$k\mathbf{0}=\mathbf{0} \tag{\href{#property-2-proof}{\text{증명}}}$$</span>
-        <span id="property-3" data-declaration="property-declaration-witout-k">$$(-1)\mathbf{u}=-\mathbf{u} \tag{\href{#property-3-proof}{\text{증명}}}$$</span>
+        <span id="property-3" data-declaration="property-declaration-witout-k">$$\exists ! \mathbf{v} \in V \quad \text{s.t.} \quad \mathbf{u} + \mathbf{v} = \mathbf{0} \tag{\href{#property-3-proof}{\text{증명}}}$$</span>
+        <span id="property-4" data-declaration="property-declaration-witout-k">$$(-1)\mathbf{u}=-\mathbf{u} \tag{\href{#property-4-proof}{\text{증명}}}$$</span>
     </p>
     <h6 id="property-1-proof" class="ns-hidden">증명</h6>
     <p data-flush-left>
@@ -68,13 +69,32 @@
     </p>
     <h6 id="property-3-proof" class="ns-hidden">증명</h6>
     <p data-flush-left>
-        $$(-1)\mathbf{u}=-\mathbf{u} \; \href{#axiom-5}{\Leftrightarrow} \; \mathbf{u}+(-1)\mathbf{u}=\mathbf{0}$$
-        $$\therefore$$
-        <!-- 유일성? -->
-        $$\mathbf{u}+(-1)\mathbf{u}\href{#axiom-10}{=}1\mathbf{u}+(-1)\mathbf{u}$$
-        $$\phantom{\mathbf{u}+(-1)\mathbf{u}}\href{#axiom-8}{=}[1+(-1)]\mathbf{u}$$
-        $$\phantom{\mathbf{u}+(-1)\mathbf{u}}=0\mathbf{u}$$
-        $$\phantom{\mathbf{u}+(-1)\mathbf{u}}\href{#property-1}{=}\mathbf{0}$$
+        <a href="#vector-space-axiom" class="ns-link">벡터 공간</a> $V$의 벡터 $\mathbf{u} \in V$에 대해 두 벡터 $\mathbf{v},\mathbf{w} \in V$가 다음을 만족한다고 가정하자.
+        <span id="property-3-proof-declaration" class="ns-hidden">가정에 따라,</span>
+        
+        <ol>
+            <li id="property-3-proof-assumption-1" data-declaration="property-3-proof-declaration">$\mathbf{u} + \mathbf{v} = \mathbf{0}$ 그리고 $\mathbf{v} + \mathbf{u} = \mathbf{0}$</li>
+            <li id="property-3-proof-assumption-2" data-declaration="property-3-proof-declaration">$\mathbf{u} + \mathbf{w} = \mathbf{0}$ 그리고 $\mathbf{w} + \mathbf{u} = \mathbf{0}$</li>
+        </ol>
+        <p data-flush-left>
+            $$\mathbf{v}\href{#axiom-4}{=}\mathbf{v}+\mathbf{0}$$
+            $$\phantom{\mathbf{v}}\href{#property-3-proof-assumption-2}{=}\mathbf{v} + (\mathbf{u} + \mathbf{w})$$
+            $$\phantom{\mathbf{v}}\href{#axiom-3}{=}(\mathbf{v}+\mathbf{u}) + \mathbf{w}$$
+            $$\phantom{\mathbf{v}}\href{#property-3-proof-assumption-1}{=}\mathbf{0} + \mathbf{w}$$
+            $$\phantom{\mathbf{v}}\href{#axiom-4}{=}\mathbf{w}$$
+            두 벡터 $\mathbf{v},\mathbf{w}$는 동일하다. 따라서 벡터공간 $V$의 벡터 $\mathbf{u} \in V$에 대해 $\mathbf{u} + \mathbf{v} = \mathbf{0}$를 만족하는 벡터 $\mathbf{v} \in V$는 유일하다.
+        </p>
+    </p>
+    <h6 id="property-4-proof" class="ns-hidden">증명</h6>
+    <p data-flush-left>
+        $$(-1)\mathbf{u}\href{#axiom-4}{=}(-1)\mathbf{u}+\mathbf{0}$$
+        $$\phantom{(-1)\mathbf{u}}\href{#axiom-5}{=}(-1)\mathbf{u}+\{\mathbf{u}+(-\mathbf{u})\}$$
+        $$\phantom{(-1)\mathbf{u}}\href{#axiom-3}{=}\{(-1)\mathbf{u}+\mathbf{u}\}+(-\mathbf{u})$$
+        $$\phantom{(-1)\mathbf{u}}\href{#axiom-10}{=}\{(-1)\mathbf{u}+1\mathbf{u}\}+(-\mathbf{u})$$
+        $$\phantom{(-1)\mathbf{u}}\href{#axiom-8}{=}(-1+1)\mathbf{u}+(-\mathbf{u})$$
+        $$\phantom{(-1)\mathbf{u}}\href{#axiom-8}{=}0\mathbf{u}+(-\mathbf{u})$$
+        $$\phantom{(-1)\mathbf{u}}\href{#property-1}{=}\mathbf{0}+(-\mathbf{u})$$
+        $$\phantom{(-1)\mathbf{u}}\href{#property-4}{=}-\mathbf{u}$$
     </p>
     <h2>용어</h2>
     <ul>

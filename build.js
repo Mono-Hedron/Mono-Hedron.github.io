@@ -7,6 +7,7 @@ const __dirname = dirname(__filename)
 
 // Folder name
 const COMPONENTS = 'components'
+const ASSETS = 'assets'
 // Placeholders
 const ROOT_PH = '{{ROOT}}'
 
@@ -36,6 +37,10 @@ function buildDirectory(currentSrcDir, currentDistDir) {
         const distPath = join(currentDistDir, item);
 
         if (item === COMPONENTS) return;
+        if (item === ASSETS) {
+            cpSync(currentSrcPath, distPath, { recursive: true });
+            return;
+        }
 
         if (statSync(currentSrcPath).isDirectory()) {
             buildDirectory(currentSrcPath, distPath);

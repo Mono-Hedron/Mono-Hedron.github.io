@@ -124,7 +124,6 @@ export function promiseSectionContainer(expandable){
                     if(!foundNode){
                         containerHTML = `<p>${getLocalizedText("sectionIDError").replace('[ID]',sectionID)}</p>`;
                     }else{
-
                         let tagName = foundNode.tagName.toLowerCase();
                         // If the node is a header, get following section.
                         if(HEADER_TAGS.indexOf(tagName) >= 0) {
@@ -305,6 +304,7 @@ export function promiseSectionContainer(expandable){
 
             // Now deliver the promised container, containing the section!
             container.innerHTML = _addSource(url) + containerHTML;
+            hideElements(container);
             resolve(container);
 
         }).catch((message)=>{

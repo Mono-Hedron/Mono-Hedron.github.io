@@ -9,7 +9,11 @@ h2 {
     border-bottom: 1px solid #eee; 
     padding-bottom: 10px; 
 }
-
+h6 { 
+    font-size: 1em;
+    margin-block-start: 1em;
+    margin-block-end: .25em;
+}
 
 header {
   border-bottom: 2px solid #eee; 

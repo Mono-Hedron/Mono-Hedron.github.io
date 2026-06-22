@@ -1,5 +1,5 @@
 export const ANIM_TIME = 300;
-export const HEADER_TAGS = ['h1','h2','h3','h4','h5','h6'];
+export const HEADER_TAGS = ['h1','h2','h3','h4','h5']; // h6 as inline heading
 
 
 class State {

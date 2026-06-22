@@ -5,18 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     
     <title>벡터 공간 - 수학 공책</title>
-
-    <!-- BUILD-PLACEHOLDER:IMPORTMAP -->
-         <link href="/assets/javascripts/nested-sketch/nested-sketch.css" rel="stylesheet" type="text/css"/>
+    <%- include(fromComponents('ns-import.html')) %>
+    <!-- <link href="/assets/javascripts/nested-sketch/nested-sketch.css" rel="stylesheet" type="text/css"/> -->
     <!-- <link href="'katex/dist/katex.min.css'" rel="stylesheet" type="text/css"/> -->
-    <link href="/assets/stylesheets/style.css" rel="stylesheet" type="text/css"/>
-    <script type='module' src="/assets/javascripts/nested-sketch/nested-sketch.js"></script>
+    <!-- <link href="/assets/stylesheets/style.css" rel="stylesheet" type="text/css"/> -->
+    <!-- <script type='module' src="/assets/javascripts/nested-sketch/nested-sketch.js"></script> -->
      
 </head>
 <body>
     <!-- header -->
-    <!-- BUILD-PLACEHOLDER:HEADER -->
-    
+    <%- include(fromComponents('header.html')) %>
     <!-- contents -->
     <h1>벡터 공간</h1>
     <hr>
@@ -111,6 +109,6 @@
         <li>집합 set</li>
     </ul>
     <!-- footer -->
-    <!-- BUILD-PLACEHOLDER:FOOTER -->
+    <%- include(fromComponents('footer.html')) %>
 </body>
 </html>

@@ -10,14 +10,14 @@ const __dirname = dirname(__filename);
 
 
 const srcDir = join(__dirname, 'src');
-const compDir = join(srcDir, 'components');
+const compDir = join(srcDir, 'assets', 'components');
 
 
 function getHtmlEntries(dir, allEntries = {}) {
   const files = readdirSync(dir);
   files.forEach(file => {
     const fullPath = join(dir, file);
-    if (file === 'components' || file === 'assets') return;
+    if (file === 'assets') return;
     
     if (statSync(fullPath).isDirectory()) {
       getHtmlEntries(fullPath, allEntries);

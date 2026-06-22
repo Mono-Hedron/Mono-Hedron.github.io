@@ -1,6 +1,6 @@
 import { promiseSectionContainer } from "../dom/section-extractor.js";
 import { renderKatex } from "../utils/renderer.js";
-import state from "../core/state.js";
+import state, { ANIM_TIME } from "../core/state.js";
 import { updateCloseAllNutshells } from "./close-all.js";
 
 
@@ -167,7 +167,7 @@ export function createBubble(expandable, clickX, convertLinksToExpandables) {
         // And animate expand for new content! Go to full height, then auto.
         // console.log(section.getBoundingClientRect().height, )
         overflow.style.height = (section.getBoundingClientRect().height+close.getBoundingClientRect().height)+"px";
-        setTimeout(()=>{ overflow.style.height="auto"; }, state.ANIM_TIME);
+        setTimeout(()=>{ overflow.style.height="auto"; }, ANIM_TIME);
 
         // Update followup text if needed
         if(typeof expandable.updateFollowupText === 'function') {
@@ -228,7 +228,7 @@ export function createBubble(expandable, clickX, convertLinksToExpandables) {
         setTimeout(()=>{
             bubble.parentNode.removeChild(bubble);
             expandable.setAttribute("mode", "closed"); // and tell Expandable to show it, too
-        }, state.ANIM_TIME+1);
+        }, ANIM_TIME + 1);
 
         // Count the killed bubbles inside, subtract from state.openShellCount
         state.openShellCount -= bubble.querySelectorAll('.nutshell-bubble').length;

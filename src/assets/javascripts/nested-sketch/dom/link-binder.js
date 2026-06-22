@@ -1,5 +1,5 @@
 import { createBubble } from "../ui/bubbles.js";
-import state from "../core/state.js";
+import state, { ANIM_TIME } from "../core/state.js";
 import { updateCloseAllNutshells } from "../ui/close-all.js";
 import { getLocalizedText } from "../core/internationalization.js";
 
@@ -163,7 +163,7 @@ export function convertLinksToExpandables(dom, _forThisElement) {
             },
 
             onOpen: () => ex.updateFollowupText(),
-            onClose: () => setTimeout(ex.updateFollowupText, state.ANIM_TIME)
+            onClose: () => setTimeout(ex.updateFollowupText, ANIM_TIME)
         });
     });
     

@@ -1,4 +1,4 @@
-export const HEADER_TAGS = ['h1','h2','h3','h4','h5','h6'];
+import { HEADER_TAGS } from "../core/state";
 
 // [Modified]
 /////////////////////////////////////////////////////////////////////
@@ -10,7 +10,7 @@ export const HEADER_TAGS = ['h1','h2','h3','h4','h5','h6'];
 export function hideElements(el=document.body) {
     // [Modified]
     // For each found heading with :colon...
-    el.querySelectorAll(':is(h1, h2, h3, h4, h5, h6).ns-link:not(.ns-hidden)')
+    el.querySelectorAll(`:is(${HEADER_TAGS.join(',')}).ns-link:not(.ns-hidden)`)
     .forEach((heading)=>{
         // Put a link before the heading
         let link = document.createElement("a");
@@ -24,7 +24,7 @@ export function hideElements(el=document.body) {
         removeSection(heading.nextSibling);
     });
 
-    el.querySelectorAll(':is(h1, h2, h3, h4, h5, h6).ns-hidden')
+    el.querySelectorAll(`:is(${HEADER_TAGS.join(',')}).ns-hidden`)
     .forEach(removeSection)
 
     el.querySelectorAll(':is(span, div).ns-hidden')

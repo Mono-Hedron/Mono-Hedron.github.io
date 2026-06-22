@@ -1,58 +1,10 @@
 import { promisePurifiedHTMLFromURL } from "../services/html-fetcher.js";
-import state from "../core/state.js";
+import state, { HEADER_TAGS } from "../core/state.js";
 import { getLocalizedText } from "../core/internationalization.js";
 import { forgivingMatchTest, isWikipedia, isYouTube, convertRelativeToAbsoluteLinks } from "../utils/helpers.js";
-import { HEADER_TAGS, hideElements } from "./element-handler.js";
+import { hideElements } from "./element-handler.js";
 import { decodeParsePurifyItalics } from "../utils/purifier.js";
 
-
-/////////////////////////////////////////////////////////////////////
-// ⭐️ Helpers
-/////////////////////////////////////////////////////////////////////
-
-// span 태그면 <p>로 감싸고, 아니면 innerHTML을 그대로 반환하는 함수
-function getInnerContent(node) {
-    const tagName = node.tagName.toLowerCase();
-    return tagName === 'span' ? `<p>${node.innerHTML}</p>` : node.innerHTML;
-}
-
-// URL에서 쿼리 파라미터를 객체로 변환하는 함수
-function parseQueryString(queryString) {
-    if (!queryString) return {};
-    const queryKeys = {};
-    queryString.split('&').forEach(term => {
-        const eqIndex = term.indexOf("=");
-        if (eqIndex > 0) {
-            const key = term.substring(0, eqIndex);
-            const value = term.substring(eqIndex + 1);
-            queryKeys[key] = value;
-        }
-    });
-    return queryKeys;
-}
-
-
-function selectByDataItemID(element, id) {
-    try {
-        const selector = `[data-item-id="${CSS.escape(id)}"]`;
-        return element.querySelector(selector);
-    } catch(_) {
-        console.warn("Selector error:", id);
-        return null;
-    }
-}
-
-
-// Add "from" source paragraph, if source is not THIS page
-function _addSource(url) {
-    if(url == state.thisPageURL){
-        return ''; // nah.
-    }else{
-        const urlSansProtocol = url.split("://")[1];
-        // [Modified] Korean word
-        return `<p class='nutshell-bubble-from'> 원문: <a target='_blank' href='${url}'>${urlSansProtocol}</a></p>`
-    }
-}
 
 /////////////////////////////////////////////////////////////////////
 // ⭐️ Get a Section from purified HTML & put in container
@@ -280,3 +232,47 @@ function searchByText(queryKeys, safeEl) {
 
 
 
+/////////////////////////////////////////////////////////////////////
+// ⭐️ Helpers
+/////////////////////////////////////////////////////////////////////
+function getInnerContent(node) {
+    const tagName = node.tagName.toLowerCase();
+    return tagName === 'span' ? `<p>${node.innerHTML}</p>` : node.innerHTML;
+}
+
+function parseQueryString(queryString) {
+    if (!queryString) return {};
+    const queryKeys = {};
+    queryString.split('&').forEach(term => {
+        const eqIndex = term.indexOf("=");
+        if (eqIndex > 0) {
+            const key = term.substring(0, eqIndex);
+            const value = term.substring(eqIndex + 1);
+            queryKeys[key] = value;
+        }
+    });
+    return queryKeys;
+}
+
+
+function selectByDataItemID(element, id) {
+    try {
+        const selector = `[data-item-id="${CSS.escape(id)}"]`;
+        return element.querySelector(selector);
+    } catch(_) {
+        console.warn("Selector error:", id);
+        return null;
+    }
+}
+
+
+// Add "from" source paragraph, if source is not THIS page
+function _addSource(url) {
+    if(url == state.thisPageURL){
+        return ''; // nah.
+    }else{
+        const urlSansProtocol = url.split("://")[1];
+        // [Modified] Korean word
+        return `<p class='nutshell-bubble-from'> 원문: <a target='_blank' href='${url}'>${urlSansProtocol}</a></p>`
+    }
+}

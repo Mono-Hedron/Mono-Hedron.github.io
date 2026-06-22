@@ -1,4 +1,4 @@
-import state from "../core/state.js";
+import state, { ANIM_TIME } from "../core/state.js";
 import { getLocalizedText } from "../core/internationalization.js";
 
 
@@ -40,7 +40,7 @@ function closeAllNutshells() {
     setTimeout(()=>{
         state.openShellCount = 0;
         updateCloseAllNutshells();
-    }, state.ANIM_TIME+100);
+    }, ANIM_TIME + 100);
 
 };
 

@@ -1,3 +1,7 @@
+export const ANIM_TIME = 300;
+export const HEADER_TAGS = ['h1','h2','h3','h4','h5','h6'];
+
+
 class State {
     constructor() {
         this.thisPageURL = location.protocol + '//' + location.host + location.pathname + location.search;
@@ -21,9 +25,5 @@ class State {
 
 }
 
-
 const state = new State();
-state.ANIM_TIME = 300;
-
-
 export default state

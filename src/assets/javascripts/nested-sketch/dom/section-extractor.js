@@ -1,5 +1,5 @@
 import { promisePurifiedHTMLFromURL } from "../services/html-fetcher.js";
-import state, { HEADER_TAGS } from "../core/state.js";
+import { HEADER_TAGS } from "../core/state.js";
 import { getLocalizedText } from "../core/internationalization.js";
 import { forgivingMatchTest, isWikipedia, isYouTube, convertRelativeToAbsoluteLinks } from "../utils/helpers.js";
 import { hideElements } from "./element-handler.js";
@@ -22,6 +22,7 @@ export async function promiseSectionContainer(expandable) {
     // After getting the purified HTML, find section,
     // then put it in a container, and resolve with that.
     try {
+        let addingURL = true;
         let containerHTML = '';
         let purifiedHTML = await promisePurifiedHTMLFromURL(url);
         if(isWikipedia(url) || isYouTube(url)){
@@ -31,6 +32,8 @@ export async function promiseSectionContainer(expandable) {
             // An element to safely search
             const safeEl = document.createElement('div');
             safeEl.innerHTML = purifiedHTML;
+            
+            // console.log(safeEl);
 
             // IF NO SECTION ID, give entire article
             if(!queryString || queryString.trim()==''){
@@ -53,7 +56,10 @@ export async function promiseSectionContainer(expandable) {
 
             if(isSearchingByHeading){
                 const sectionID = queryStringBroken[0];
-                containerHTML = searchByHeading(queryKeys, safeEl, sectionID);
+                let foundNode;
+                [containerHTML, foundNode] = searchByHeading(queryKeys, safeEl, sectionID);
+                addingURL = !(foundNode && foundNode.classList.contains('ns-hidden'));
+
             }else{
                 containerHTML = searchByText(queryKeys, safeEl);
             }
@@ -70,7 +76,7 @@ export async function promiseSectionContainer(expandable) {
         }
 
         // Now deliver the promised container, containing the section!
-        container.innerHTML = _addSource(url) + containerHTML;
+        container.innerHTML = addingURL ? addSource(url) + containerHTML : containerHTML;
         hideElements(container);
     
     } catch (message) {
@@ -103,7 +109,7 @@ function searchByHeading(queryKeys, safeEl, sectionID) {
 
     // If after all that, STILL none, tell user the error.
     if(!foundNode){
-        return `<p>${getLocalizedText("sectionIDError").replace('[ID]',sectionID)}</p>`;
+        return [`<p>${getLocalizedText("sectionIDError").replace('[ID]',sectionID)}</p>`, foundNode];
     }
 
 
@@ -164,7 +170,7 @@ function searchByHeading(queryKeys, safeEl, sectionID) {
             containerHTML = getInnerContent(declaration) + containerHTML;
         }
     }
-    return containerHTML;
+    return [containerHTML, foundNode];
 }
 
 
@@ -267,12 +273,17 @@ function selectByDataItemID(element, id) {
 
 
 // Add "from" source paragraph, if source is not THIS page
-function _addSource(url) {
-    if(url == state.thisPageURL){
-        return ''; // nah.
-    }else{
-        const urlSansProtocol = url.split("://")[1];
-        // [Modified] Korean word
-        return `<p class='nutshell-bubble-from'> 원문: <a target='_blank' href='${url}'>${urlSansProtocol}</a></p>`
+function addSource(url) {
+    try {
+        const targetUrl = new URL(url);
+        const urlSansProtocol = targetUrl.href.replace(targetUrl.protocol + '//', '');
+        const thisPage = location.host + location.pathname;
+        
+        // Remove current page url.
+        const shortenedURL = urlSansProtocol.replace(thisPage, '');
+
+        return `<p class='nutshell-bubble-from'> 원문: <a target='_blank' href='${url}'>${shortenedURL}</a></p>`;
+    } catch (_) {
+        return ''; 
     }
 }

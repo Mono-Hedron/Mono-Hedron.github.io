@@ -300,8 +300,8 @@ function addSource(url) {
 
         if (samePage && hashID) {
             a.addEventListener('click', function(e) {
-                let targetElement = document.querySelector(`[data-item-id="${hashID}"]`);
-                targetElement = targetElement ? targetElement : document.querySelector(`#${hashID}`);
+                let targetElement = document.querySelector(`#${hashID}`);
+                targetElement = targetElement ? targetElement : document.querySelector(`[data-item-id="${hashID}"]`);
                 
                 if (!targetElement) return;
                 

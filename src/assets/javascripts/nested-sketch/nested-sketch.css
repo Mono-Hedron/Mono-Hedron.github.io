@@ -304,3 +304,25 @@ CLOSE ALL NUTSHELLS
     text-align: var(--math-align) !important;
     padding-left: var(--math-padding) !important;
 }
+
+
+/* Link highlight */
+.highlight {
+            background-color: transparent;
+            animation: highlight-fade 1.5s ease-in;
+        }
+:target, :target span {
+  animation: highlight-fade 1.75s ease-in;
+  background-color: transparent;
+}
+
+@keyframes highlight-fade {
+  0% {
+    background-color: #ffde39;
+  }
+  100% {
+    background-color: transparent;
+    /* background-color: transparent; */
+  }
+}
+

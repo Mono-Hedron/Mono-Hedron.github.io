@@ -35,18 +35,3 @@ footer a {
   font-size: 0.8rem;
 }
 
-/* Link highlight */
-@keyframes highlight-fade {
-  0% {
-    background-color: #ffde39;
-  }
-  100% {
-    background-color: #fff9db;
-    /* background-color: transparent; */
-  }
-}
-
-:target, :target span {
-  animation: highlight-fade 1.5s ease-in;
-  background-color: #fff9db;
-}

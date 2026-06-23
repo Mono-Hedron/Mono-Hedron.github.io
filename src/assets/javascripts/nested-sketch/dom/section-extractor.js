@@ -76,7 +76,10 @@ export async function promiseSectionContainer(expandable) {
         }
 
         // Now deliver the promised container, containing the section!
-        container.innerHTML = addingURL ? addSource(url) + containerHTML : containerHTML;
+        container.innerHTML = containerHTML;
+        if (addingURL) {
+            container.prepend(addSource(url));
+        }
         hideElements(container);
     
     } catch (message) {
@@ -275,15 +278,52 @@ function selectByDataItemID(element, id) {
 // Add "from" source paragraph, if source is not THIS page
 function addSource(url) {
     try {
-        const targetUrl = new URL(url);
-        const urlSansProtocol = targetUrl.href.replace(targetUrl.protocol + '//', '');
-        const thisPage = location.host + location.pathname;
+        const targetURL = new URL(url);
+        const targetWithoutProtocal = targetURL.href.replace(targetURL.protocol + '//', '');
+        const thisPageURL = location.host + location.pathname;
         
         // Remove current page url.
-        const shortenedURL = urlSansProtocol.replace(thisPage, '');
+        const shortenedURL = targetWithoutProtocal.replace(thisPageURL, '');
 
-        return `<p class='nutshell-bubble-from'> 원문: <a target='_blank' href='${url}'>${shortenedURL}</a></p>`;
+        // Create a document element.
+        const p = document.createElement('p');
+        p.className = 'nutshell-bubble-from';
+        p.innerHTML = `원문: `;
+
+        const a = document.createElement('a');
+        a.target = '_blank';
+        a.href = url;
+        a.textContent = shortenedURL;
+
+        const samePage = targetWithoutProtocal.includes(thisPageURL);
+        const hashID = targetURL.hash.replace('#', '');
+
+        if (samePage && hashID) {
+            a.addEventListener('click', function(e) {
+                let targetElement = document.querySelector(`[data-item-id="${hashID}"]`);
+                targetElement = targetElement ? targetElement : document.querySelector(`#${hashID}`);
+                
+                if (!targetElement) return;
+                
+                e.preventDefault();
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+
+                targetElement.classList.add('highlight');
+
+                setTimeout(() => {
+                    targetElement.classList.remove('highlight');
+                }, 2000);
+            });
+        }
+        
+        p.appendChild(a);
+
+        return p; 
     } catch (_) {
         return ''; 
     }
 }
+

@@ -164,10 +164,11 @@ BUBBLES:
 
 /* From */
 .nutshell-bubble-from{
-    font-size: 0.69em;
-    /* line-height: 0.69em; */
-    margin-bottom: -0.69em;
-    opacity: 0.69;
+    font-size: 0.7em;
+    /* line-height: 0.7em; */
+    margin-bottom: -0.7em;
+    margin-top: -0.7em;
+    opacity: 0.7;
 }
 
 /* Foot: is a close button, too. */
@@ -322,7 +323,6 @@ CLOSE ALL NUTSHELLS
   }
   100% {
     background-color: transparent;
-    /* background-color: transparent; */
   }
 }
 

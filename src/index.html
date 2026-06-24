@@ -1,20 +1,18 @@
 <!doctype html>
 <html lang="ko">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <title>수학 공책</title>
-
+    <%- include(fromComponents('head.html')) %>
     <link href="/assets/stylesheets/style.css" rel="stylesheet" type="text/css" />
+    <title>수학 공책</title>
   </head>
   <body>
     <h1>수학 공책</h1>
 
     <ul>
-      <li><a href="/linear-algebra/vector-space.html">벡터 공간</a></li>
+      <li><a href="/linear-algebra/vector-space.html">벡터공간</a></li>
+      <li><a href="/linear-algebra/subspace.html">부분공간</a></li>
     </ul>
-
+    <!-- footer -->
     <%- include(fromComponents('footer.html')) %>
   </body>
 </html>

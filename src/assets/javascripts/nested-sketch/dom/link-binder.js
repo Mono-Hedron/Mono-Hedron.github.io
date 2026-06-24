@@ -75,62 +75,52 @@ function bindExpandable(el, strategies = {}) {
 function extractPunctuation(ex) {
   // Save the punctuation!
   // Extremely inefficient: plop each character one-by-one into the span
-  let punctuation = document.createElement('span');
+  const punctuation = document.createElement('span');
   if (ex.nextSibling && ex.nextSibling.nodeValue) {
-    let nextChar;
-    // get next char, is it punctuation?
-    let keepPunctuation = getLocalizedText('keepPunctuation');
-    while (keepPunctuation.indexOf((nextChar = ex.nextSibling.nodeValue[0])) >= 0) {
-      ex.nextSibling.nodeValue = ex.nextSibling.nodeValue.slice(1); // slice off the rest
-      punctuation.innerHTML += nextChar; // slap it on
+    const keepPunctuation = getLocalizedText('keepPunctuation');
+    let nodeText = ex.nextSibling.nodeValue;
+    let extracted = '';
+
+    while (nodeText.length > 0 && keepPunctuation.includes(nodeText[0])) {
+      extracted += nodeText[0];
+      nodeText = nodeText.slice(1);
+    }
+
+    if (extracted) {
+      ex.nextSibling.nodeValue = nodeText;
+      punctuation.textContent = extracted;
     }
   }
-  ex.parentNode.insertBefore(punctuation, ex.nextSibling); // add right after expandable link
 
+  ex.parentNode.insertBefore(punctuation, ex.nextSibling); // add right after expandable link
   return punctuation;
 }
 
 function createFollowUpHTML(ex, punctuation) {
   // Follow up by repeating last sentence, UNLESS IT'S THE START/END OF PARAGRAPH ALREADY.
   const next = punctuation.nextSibling;
-  let hasWordsAfterExpandable =
-    (next?.nodeValue?.trim().length > 1 ||
-      (next?.nodeValue == ' ' && next.nextElementSibling?.querySelector('.katex') !== null)) ??
-    false;
-  // (punctuation.nextSibling?.nodeValue?.trim().length > 1 || punctuation.nextSibling?.querySelector('.katex') != null) ?? false;
+  if (!next) return null;
 
-  let followupSpan = document.createElement('span');
-  followupSpan.style.display = 'none';
-  followupSpan.className = 'nutshell-followup';
+  const hasValidText = next.nodeValue && next.nodeValue.trim().length > 1;
+  const hasNextKatex = next.nextElementSibling?.querySelector('.katex') != null;
+  const hasWordsAfterExpandable = hasValidText || hasNextKatex;
+
+  if (!hasWordsAfterExpandable) return null;
+
+  const followupSpan = document.createElement('span');
+  followupSpan.classList.add('nutshell-followup', 'is-hidden');
+  followupSpan.textContent = '...';
   ex.parentNode.insertBefore(followupSpan, punctuation.nextSibling); // add right after punctuation
 
-  // Short or long followup TEXT?
-  let shortFollowupHTML = '...';
-  if (hasWordsAfterExpandable) {
-    // Get last sentence...
-    let htmlBeforeThisLink = ex.parentNode.innerHTML.split(ex.outerHTML)[0]; // everything BEFORE this html
-    // Convert to raw text
-    let tmpSpan = document.createElement('span');
-    tmpSpan.innerHTML = htmlBeforeThisLink;
-    // Get immediately previous sentence
-
-    // Follow up with prev sentence, then expandable text in bold, then punctuation
-    // longFollowupHTML = lastSentenceHTML + '<b>' + ex.innerHTML + '</b>' + punctuation.innerHTML;
-  }
-  // Method needs to be publicly accessible, I guess
   ex.updateFollowupText = () => {
-    if (!ex.bubble || !hasWordsAfterExpandable) {
-      // if closed (or no words after), hide followup span
-      followupSpan.style.display = 'none';
+    if (!ex.bubble) {
+      followupSpan.classList.add('is-hidden');
     } else {
-      // if open, show only if bubble's textContent is above 50 words
-      // let longEnough = (ex.bubble.textContent.trim().split(" ").length>=50);
-      followupSpan.style.display = 'inline';
-      // [Modified] [TASK] long followup latex texts are not rendered.
-      // followupSpan.innerHTML = longEnough ? longFollowupHTML : shortFollowupHTML;
-      followupSpan.innerHTML = shortFollowupHTML;
+      followupSpan.classList.remove('is-hidden');
     }
   };
+
+  return followupSpan;
 }
 
 // [Modified]
@@ -138,7 +128,7 @@ export function convertLinksToExpandables(dom, _forThisElement) {
   //1. General expandable link
   dom.querySelectorAll('a.ns-link:not(.katex-html *)').forEach((ex) => {
     const punctuation = extractPunctuation(ex);
-    createFollowUpHTML(ex, punctuation);
+    const followupSpan = createFollowUpHTML(ex, punctuation);
 
     bindExpandable(ex, {
       getClickX: (e, el) => e.clientX - el.parentNode.getBoundingClientRect().x,
@@ -147,8 +137,8 @@ export function convertLinksToExpandables(dom, _forThisElement) {
         el.parentNode.insertBefore(bubble, punctuation.nextSibling);
       },
 
-      onOpen: () => ex.updateFollowupText(),
-      onClose: () => setTimeout(ex.updateFollowupText, ANIM_TIME),
+      onOpen: followupSpan ? () => ex.updateFollowupText() : null,
+      onClose: followupSpan ? () => setTimeout(ex.updateFollowupText, ANIM_TIME) : null,
     });
   });
 
@@ -160,8 +150,7 @@ export function convertLinksToExpandables(dom, _forThisElement) {
     bindExpandable(mathLink, {
       getClickX: (e, el) => {
         const mathWrapper = el.closest('.katex') ?? el;
-        const container = mathWrapper.parentNode;
-        const containerRect = container.getBoundingClientRect();
+        const containerRect = mathWrapper.parentNode.getBoundingClientRect();
         return e.clientX - containerRect.left;
       },
 
@@ -175,17 +164,21 @@ export function convertLinksToExpandables(dom, _forThisElement) {
     });
 
     // Place prior whitespace in front of the link.
-    while (mathLink.firstElementChild?.classList.contains('mspace')) {
-      const child = mathLink.firstElementChild;
-      mathLink.removeChild(child);
-      mathLink.parentElement.insertBefore(child, mathLink);
-    }
-    // Place post whitespace after the link.
-    while (mathLink.lastElementChild?.classList.contains('mspace')) {
-      const child = mathLink.lastElementChild;
-      mathLink.removeChild(child);
-      mathLink.parentElement.insertBefore(child, mathLink.nextSibling);
-    }
+    moveMspaceSiblings(mathLink, 'firstElementChild', (child) => mathLink.parentElement.insertBefore(child, mathLink));
+    moveMspaceSiblings(mathLink, 'lastElementChild', (child) =>
+      mathLink.parentElement.insertBefore(child, mathLink.nextSibling)
+    );
+    // while (mathLink.firstElementChild?.classList.contains('mspace')) {
+    //   const child = mathLink.firstElementChild;
+    //   mathLink.removeChild(child);
+    //   mathLink.parentElement.insertBefore(child, mathLink);
+    // }
+    // // Place post whitespace after the link.
+    // while (mathLink.lastElementChild?.classList.contains('mspace')) {
+    //   const child = mathLink.lastElementChild;
+    //   mathLink.removeChild(child);
+    //   mathLink.parentElement.insertBefore(child, mathLink.nextSibling);
+    // }
 
     // [TEST] aria-hidden removal
     const container = mathLink.closest('.katex-html');
@@ -193,4 +186,14 @@ export function convertLinksToExpandables(dom, _forThisElement) {
       container.removeAttribute('aria-hidden');
     }
   });
+}
+
+function moveMspaceSiblings(mathLink, childProp, insertFunc) {
+  while (mathLink[childProp]?.classList.contains('mspace')) {
+    const child = mathLink[childProp];
+    mathLink.removeChild(child);
+    if (typeof insertFunc === 'function') {
+      insertFunc(child);
+    }
+  }
 }

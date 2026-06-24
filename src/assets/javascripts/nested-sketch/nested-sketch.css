@@ -313,3 +313,7 @@ CLOSE ALL NUTSHELLS
     background-color: transparent;
   }
 }
+
+.is-hidden {
+  display: none;
+}

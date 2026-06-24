@@ -1,20 +1,57 @@
-<h2 id="subspace">부분공간</h2>
-        <p>
-            벡터공간 $V$의 공집합이 아닌 부분집합 $W \subseteq V$가 $V$의 스칼라곱과 덧셈이 정의된 벡터공간일 때, $W$를 $V$의 <strong>부분공간</strong>이라고 한다.
-        </p>
-        <h3>부분공간 필요충분조건</h3>
-        <p>
-            $W \subseteq V$가 벡터공간 $V$의 공집합이 아닌 부분집합일 때, 다음은 동치이다.
-        <ol>
-            <li>$W$는 $V$의 부분공간이다.</li>
-            <li>
-                $$\forall \mathbf{u}, \mathbf{v} \in W, \; \forall k \in \mathbb{R} \quad \mathbf{u}+\mathbf{v} \in W
-                \land k\mathbf{u} \in W$$
-            </li>
-        </ol>
-        </p>
+<!doctype html>
+<html lang="ko">
+  <head>
+    <%- include(fromComponents('head.html')) %> <%- include(fromComponents('ns-import.html')) %>
+    <title>부분공간 - 수학 공책</title>
+  </head>
+  <body>
+    <!-- header -->
+    <%- include(fromComponents('header.html')) %>
+    <!-- contents -->
+    <h1>부분공간</h1>
+    <hr />
+    <h2 id="definition">정의</h2>
+    <p>
+      <a href="/linear-algebra/vector-space#vector-space-axiom" class="ns-link">벡터공간</a>
+      $V$의 공집합이 아닌 부분집합 $W \subseteq V$가 $V$의 스칼라곱과 덧셈이 정의된 벡터공간일 때, $W$를 $V$의
+      <strong>부분공간</strong>
+      이라고 한다.
+    </p>
+    <h2>필요충분조건</h2>
+    <p>
+      $W \subseteq V$가
+      <a href="/linear-algebra/vector-space#vector-space-axiom" class="ns-link">벡터공간</a>
+      $V$의 공집합이 아닌 부분집합일 때, 다음은 동치이다.
+    </p>
+    <ol data-flush-left="0">
+      <li>$W$는 $V$의 부분공간이다.</li>
+      <li>
+        $$\forall \mathbf{u}, \mathbf{v} \in W, \; \forall k \in \mathbb{R} \quad \mathbf{u}+\mathbf{v} \in W \land
+        k\mathbf{u} \in W \tag{\href{#iff-proof}{\text{증명}}}$$
+      </li>
+    </ol>
+    <h5 id="iff-proof" class="ns-hidden">필요충분조건 증명</h5>
+    <p>
+      $(1)\Rightarrow (2)$:
+      <a href="#definition" class="ns-link">정의</a>
+      에 따라, $W$는
+      <a href="/linear-algebra/vector-space#vector-space-axiom" class="ns-link">벡터공간</a>
+      이다. 따라서 $W$는 벡터공간 공리
+      <a href="/linear-algebra/vector-space#axiom-1" class="ns-link">1</a>
+      ,
+      <a href="/linear-algebra/vector-space#axiom-6" class="ns-link">6</a>
+      을 만족한다.
+    </p>
+    <p>
+      $(2)\Rightarrow (1)$: $W \subseteq V$가
+      <a href="/linear-algebra/vector-space#vector-space-axiom" class="ns-link">벡터공간</a>
+      $V$의 공집합이 아닌 부분집합이므로, $\forall \mathbf{u} \in W \implies \mathbf{u} \in V$이다. 따라서 $W$는
+      벡터공간 공리 2, 3, 7, 8, 9, 10을 만족한다. 조건에 따라, $W$는 벡터공간 공리 1, 6을 만족한다. 벡터공간 공리 6에
+      스칼라 0, -1을 대입하면 벡터공간 공리 4, 5가 각각 만족됨을 알 수 있다. $W$는 벡터공간 공리를 만족하므로
+      벡터공간이다.
+    </p>
 
-<h2>용어</h2>
+    <h2>용어</h2>
     <ul>
       <li>공리 axiom</li>
       <li>덧셈 addition</li>
@@ -32,3 +69,7 @@
       <li>부분집합 subset</li>
       <li>부분공간 subspace</li>
     </ul>
+    <!-- footer -->
+    <%- include(fromComponents('footer.html')) %>
+  </body>
+</html>

@@ -1,122 +1,211 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    
-    <title>벡터 공간 - 수학 공책</title>
+
+    <title>벡터공간 - 수학 공책</title>
     <%- include(fromComponents('ns-import.html')) %>
-</head>
-<body>
+  </head>
+
+  <body>
     <!-- header -->
     <%- include(fromComponents('header.html')) %>
     <!-- contents -->
-    <h1>벡터 공간</h1>
-    <hr>
-    <h2 id="vector-space-axiom">벡터 공간 공리</h2>
+    <h1>벡터공간</h1>
+    <hr />
+    <h2 id="vector-space-axiom">벡터공간 공리</h2>
     <p>
-        <!-- 실수 체 -->
-       모든 $\mathbf{u},\mathbf{v},\mathbf{w} \in V$와 모든 스칼라 $k, l$에 대해 다음을 만족하는,
-        덧셈과 스칼라곱이 정의된 공집합이 아닌 집합 $V$를 <strong>벡터 공간</strong>,
-        $V$의 원소를 <strong>벡터</strong>라고 한다.
+      <!-- 실수 체 -->
+      모든 $\mathbf{u},\mathbf{v},\mathbf{w} \in V$와 모든 스칼라 $k, l$에 대해 다음을 만족하는, 덧셈과 스칼라곱이
+      정의된 공집합이 아닌 집합 $V$를
+      <strong>벡터공간</strong>
+      , $V$의 원소를
+      <strong>벡터</strong>
+      라고 한다.
     </p>
     <div data-flush-left="0">
-        <ol>
-            <li id="axiom-1">$$\mathbf{u}+\mathbf{v} \in V$$</li>
-            <li id="axiom-2">$$\mathbf{u}+\mathbf{v}=\mathbf{v}+\mathbf{u}$$</li>
-            <li id="axiom-3">$$\mathbf{u}+(\mathbf{v}+\mathbf{w})=(\mathbf{u}+\mathbf{v})+\mathbf{w}$$</li>
-            <li id="axiom-4">$$\exists \mathbf{0} \in V \quad \text{s.t.} \quad \mathbf{u}+\mathbf{0}=\mathbf{u}$$</li>
-            <li id="axiom-5">$$\exists -\mathbf{u} \in V \quad \text{s.t.} \quad  \mathbf{u}+(-\mathbf{u})=\mathbf{0}$$</li>
-            <li id="axiom-6">$$ k\mathbf{u} \in V$$</li>
-            <li id="axiom-7">$$k(\mathbf{u}+\mathbf{v})=k\mathbf{u}+k\mathbf{v}$$</li>
-            <li id="axiom-8">$$(k+l)\mathbf{u}=k\mathbf{u}+l\mathbf{u}$$</li>
-            <li id="axiom-9">$$k(l\mathbf{u})=(kl)\mathbf{u}$$</li>
-            <li id="axiom-10">$$1\mathbf{u}=\mathbf{u}$$</li>
-        </ol> 
+      <ol>
+        <li id="axiom-1">$$\mathbf{u}+\mathbf{v} \in V$$</li>
+        <li id="axiom-2">$$\mathbf{u}+\mathbf{v}=\mathbf{v}+\mathbf{u}$$</li>
+        <li id="axiom-3">$$\mathbf{u}+(\mathbf{v}+\mathbf{w})=(\mathbf{u}+\mathbf{v})+\mathbf{w}$$</li>
+        <li id="axiom-4">$$\exists \mathbf{0} \in V \quad \text{s.t.} \quad \mathbf{u}+\mathbf{0}=\mathbf{u}$$</li>
+        <li id="axiom-5">$$\exists -\mathbf{u} \in V \quad \text{s.t.} \quad \mathbf{u}+(-\mathbf{u})=\mathbf{0}$$</li>
+        <li id="axiom-6">$$ k\mathbf{u} \in V$$</li>
+        <li id="axiom-7">$$k(\mathbf{u}+\mathbf{v})=k\mathbf{u}+k\mathbf{v}$$</li>
+        <li id="axiom-8">$$(k+l)\mathbf{u}=k\mathbf{u}+l\mathbf{u}$$</li>
+        <li id="axiom-9">$$k(l\mathbf{u})=(kl)\mathbf{u}$$</li>
+        <li id="axiom-10">$$1\mathbf{u}=\mathbf{u}$$</li>
+      </ol>
     </div>
-    
-    <h2 id="properties-of-vector-space">벡터 공간의 성질</h2>
+    <h2 id="properties-of-vector-space">벡터공간의 성질</h2>
     <p>
-        <span id="property-declaration">$\mathbf{u}$가 <a href="#vector-space-axiom" class="ns-link">벡터 공간</a> $V$의 벡터이고 $k$가 스칼라일 때,</span>
-        <span id="property-declaration-witout-k" class="ns-hidden">$\mathbf{u}$가 <a href="#vector-space-axiom" class="ns-link">벡터 공간</a> $V$의 벡터일 때,</span>
-        
-        <span id="property-1" data-declaration="property-declaration-witout-k">$$0\mathbf{u}=\mathbf{0} \tag{\href{#property-1-proof}{\text{증명}}}$$</span>
-        <span id="property-2" data-declaration="property-declaration">$$k\mathbf{0}=\mathbf{0} \tag{\href{#property-2-proof}{\text{증명}}}$$</span>
-        <span id="property-3" data-declaration="property-declaration-witout-k">$$\exists ! \mathbf{v} \in V \quad \text{s.t.} \quad \mathbf{u} + \mathbf{v} = \mathbf{0} \tag{\href{#property-3-proof}{\text{증명}}}$$</span>
-        <span id="property-4" data-declaration="property-declaration-witout-k">$$(-1)\mathbf{u}=-\mathbf{u} \tag{\href{#property-4-proof}{\text{증명}}}$$</span>
+      <span id="property-declaration">
+        $\mathbf{u}, \mathbf{v}, \mathbf{w}$가
+        <a href="#vector-space-axiom" class="ns-link">벡터공간</a>
+        $V$의 벡터이고 $k$가 스칼라일 때,
+      </span>
+      <span id="property-declaration-u" class="ns-hidden">
+        $\mathbf{u}$가
+        <a href="#vector-space-axiom" class="ns-link">벡터공간</a>
+        $V$의 벡터일 때,
+      </span>
+      <span id="property-declaration-u-k" class="ns-hidden">
+        $\mathbf{u}$가
+        <a href="#vector-space-axiom" class="ns-link">벡터공간</a>
+        $V$의 벡터이고 $k$가 스칼라일 때,
+      </span>
+
+      <span id="property-1" data-declaration="property-declaration-u">
+        $$0\mathbf{u}=\mathbf{0} \tag{\href{#property-1-proof}{\text{증명}}}$$
+      </span>
+      <span id="property-2" data-declaration="property-declaration-u-k">
+        $$k\mathbf{0}=\mathbf{0} \tag{\href{#property-2-proof}{\text{증명}}}$$
+      </span>
+      <span id="property-5" data-declaration="property-declaration-u">
+        $$(-1)\mathbf{u}=-\mathbf{u} \tag{\href{#property-5-proof}{\text{증명}}}$$
+      </span>
     </p>
-    <h5 id="property-1-proof" class="ns-hidden">증명</h5>
+    <h6>덧셈 항등원 유일성</h6>
+    <p>
+      <span id="property-3" data-declaration="property-declaration-u">
+        $$\exists ! \mathbf{0} \in V \quad \text{s.t.} \quad \mathbf{u} + \mathbf{0} = \mathbf{0}
+        \tag{\href{#property-3-proof}{\text{증명}}}$$
+      </span>
+    </p>
+
+    <h6>덧셈역원 유일성</h6>
+    <p>
+      <span id="property-4" data-declaration="property-declaration-u">
+        $$\exists ! \mathbf{v} \in V \quad \text{s.t.} \quad \mathbf{u} + \mathbf{v} = \mathbf{0}
+        \tag{\href{#property-4-proof}{\text{증명}}}$$
+      </span>
+    </p>
+
+    <h6>소거법칙</h6>
+    <p>
+      <span id="property-6" data-declaration="property-declaration">
+        $$\mathbf{u}+\mathbf{w}=\mathbf{v}+\mathbf{w} \quad \Rightarrow \quad \mathbf{u}=\mathbf{v}
+        \tag{\href{#property-6-proof}{\text{증명}}}$$
+      </span>
+    </p>
+
+    <h5 id="property-1-proof" class="ns-hidden">1 증명</h5>
     <p data-flush-left>
-        $$0\mathbf{u}\href{#axiom-4}{=}0\mathbf{u}+\mathbf{0}$$
-        $$\phantom{0\mathbf{u}}\href{#axiom-5}{=}0\mathbf{u}+[0\mathbf{u}+(-0\mathbf{u})]$$
-        $$\phantom{0\mathbf{u}}\href{#axiom-3}{=}[0\mathbf{u}+0\mathbf{u}]+(-0\mathbf{u})$$
-        $$\phantom{0\mathbf{u}}\href{#axiom-8}{=}[0+0]\mathbf{u}+(-0\mathbf{u})$$
-        $$\phantom{0\mathbf{u}}=0\mathbf{u}+(-0\mathbf{u})$$
-        $$\phantom{0\mathbf{u}}\href{#axiom-5}{=}\mathbf{0}$$
+      $$0\mathbf{u}\href{#axiom-4}{=}0\mathbf{u}+\mathbf{0}$$
+      $$\phantom{0\mathbf{u}}\href{#axiom-5}{=}0\mathbf{u}+[0\mathbf{u}+(-0\mathbf{u})]$$
+      $$\phantom{0\mathbf{u}}\href{#axiom-3}{=}[0\mathbf{u}+0\mathbf{u}]+(-0\mathbf{u})$$
+      $$\phantom{0\mathbf{u}}\href{#axiom-8}{=}[0+0]\mathbf{u}+(-0\mathbf{u})$$
+      $$\phantom{0\mathbf{u}}=0\mathbf{u}+(-0\mathbf{u})$$ $$\phantom{0\mathbf{u}}\href{#axiom-5}{=}\mathbf{0}$$
     </p>
-    <h5 id="property-2-proof" class="ns-hidden">증명</h5>
+    <h5 id="property-2-proof" class="ns-hidden">2 증명</h5>
     <p data-flush-left>
-        $$k\mathbf{0}\href{#axiom-4}{=}k\mathbf{0}+\mathbf{0}$$
-        $$\phantom{k\mathbf{0}}\href{#axiom-5}{=}k\mathbf{0}+[k\mathbf{0}+(-k\mathbf{0})]$$
-        $$\phantom{k\mathbf{0}}\href{#axiom-3}{=}[k\mathbf{0}+k\mathbf{0}]+(-k\mathbf{0})$$
-        $$\phantom{k\mathbf{0}}\href{#axiom-7}{=}k[\mathbf{0}+\mathbf{0}]+(-k\mathbf{0})$$
-        $$\phantom{k\mathbf{0}}\href{#axiom-4}{=}k\mathbf{0}+(-k\mathbf{0})$$
-        $$\phantom{k\mathbf{0}}\href{#axiom-5}{=}\mathbf{0}$$
+      $$k\mathbf{0}\href{#axiom-4}{=}k\mathbf{0}+\mathbf{0}$$
+      $$\phantom{k\mathbf{0}}\href{#axiom-5}{=}k\mathbf{0}+[k\mathbf{0}+(-k\mathbf{0})]$$
+      $$\phantom{k\mathbf{0}}\href{#axiom-3}{=}[k\mathbf{0}+k\mathbf{0}]+(-k\mathbf{0})$$
+      $$\phantom{k\mathbf{0}}\href{#axiom-7}{=}k[\mathbf{0}+\mathbf{0}]+(-k\mathbf{0})$$
+      $$\phantom{k\mathbf{0}}\href{#axiom-4}{=}k\mathbf{0}+(-k\mathbf{0})$$
+      $$\phantom{k\mathbf{0}}\href{#axiom-5}{=}\mathbf{0}$$
     </p>
-    <h5 id="property-3-proof" class="ns-hidden">증명</h5>
-    <span id="property-3-proof-declaration"><h6>전제</h6></span>
+    <h5 id="property-3-proof" class="ns-hidden">3 증명</h5>
+    <div id="property-3-proof-declaration">
+      <h6>전제</h6>
+    </div>
     <p data-flush-left>
-        <a href="#vector-space-axiom" class="ns-link">벡터 공간</a> $V$의 벡터 $\mathbf{u} \in V$에 대해 
-        두 벡터 $\mathbf{v},\mathbf{w} \in V$가 다음을 만족한다고 가정한다.
-        <div data-flush-left="0">
-            <ol>
-                <li id="property-3-proof-assumption-1" data-declaration="property-3-proof-declaration">
-                    $$\mathbf{u} + \mathbf{v} = \mathbf{0}, \; \mathbf{v} + \mathbf{u} = \mathbf{0}$$
-                </li>
-                <li id="property-3-proof-assumption-2" data-declaration="property-3-proof-declaration">
-                    $$\mathbf{u} + \mathbf{w} = \mathbf{0}, \; \mathbf{w} + \mathbf{u} = \mathbf{0}$$
-                </li>
-            </ol>
-        </div>
-        
+      <a href="#vector-space-axiom" class="ns-link">벡터공간</a>
+      $V$의 벡터 $\mathbf{u} \in V$에 대해 두 벡터 $\mathbf{0}_1,\mathbf{0}_2 \in V$가 다음을 만족한다고 가정한다.
     </p>
+    <div data-flush-left="0">
+      <ol>
+        <li id="property-3-proof-assumption-1" data-declaration="property-3-proof-declaration">
+          $$\mathbf{u} + \mathbf{0}_1 = \mathbf{u}, \; \mathbf{0}_1 + \mathbf{u} = \mathbf{u}$$
+        </li>
+        <li id="property-3-proof-assumption-2" data-declaration="property-3-proof-declaration">
+          $$\mathbf{u} + \mathbf{0}_2 = \mathbf{u}, \; \mathbf{0}_2 + \mathbf{u} = \mathbf{u}$$
+        </li>
+      </ol>
+    </div>
     <h6>추론</h6>
-        <p data-flush-left>
-            $$\mathbf{v}\href{#axiom-4}{=}\mathbf{v}+\mathbf{0}$$
-            $$\phantom{\mathbf{v}}\href{#property-3-proof-assumption-2}{=}\mathbf{v} + (\mathbf{u} + \mathbf{w})$$
-            $$\phantom{\mathbf{v}}\href{#axiom-3}{=}(\mathbf{v}+\mathbf{u}) + \mathbf{w}$$
-            $$\phantom{\mathbf{v}}\href{#property-3-proof-assumption-1}{=}\mathbf{0} + \mathbf{w}$$
-            $$\phantom{\mathbf{v}}\href{#axiom-4}{=}\mathbf{w}$$
-            두 벡터 $\mathbf{v},\mathbf{w}$는 동일하다. 
-        </p>
+    <p data-flush-left>
+      $$\mathbf{0}_1\href{#property-3-proof-assumption-2}{=}\mathbf{0}_1+\mathbf{0}_2$$
+      $$\phantom{\mathbf{0}_1}\href{#property-4-proof-assumption-1}{=}\mathbf{0}_2$$ 두 벡터
+      $\mathbf{0}_1,\mathbf{0}_2$는 동일하다.
+    </p>
     <h6>결론</h6>
     <p>
-        벡터공간 $V$의 모든 벡터 $\mathbf{u} \in V$에 대해 
-        $\mathbf{u} + \mathbf{v} = \mathbf{0}$를 만족하는 역원 벡터 $\mathbf{v} \in V$는 유일하다.
+      벡터공간 $V$의 모든 벡터 $\mathbf{u} \in V$에 대해 $\mathbf{u} + \mathbf{0} = \mathbf{u}$를 만족하는 덧셈 항등원
+      벡터 $\mathbf{0} \in V$는 유일하다.
     </p>
-    <h5 id="property-4-proof" class="ns-hidden">증명</h5>
+    <h5 id="property-4-proof" class="ns-hidden">4 증명</h5>
+    <div id="property-4-proof-declaration">
+      <h6>전제</h6>
+    </div>
     <p data-flush-left>
-        $$(-1)\mathbf{u}\href{#axiom-4}{=}(-1)\mathbf{u}+\mathbf{0}$$
-        $$\phantom{(-1)\mathbf{u}}\href{#axiom-5}{=}(-1)\mathbf{u}+\{\mathbf{u}+(-\mathbf{u})\}$$
-        $$\phantom{(-1)\mathbf{u}}\href{#axiom-3}{=}\{(-1)\mathbf{u}+\mathbf{u}\}+(-\mathbf{u})$$
-        $$\phantom{(-1)\mathbf{u}}\href{#axiom-10}{=}\{(-1)\mathbf{u}+1\mathbf{u}\}+(-\mathbf{u})$$
-        $$\phantom{(-1)\mathbf{u}}\href{#axiom-8}{=}(-1+1)\mathbf{u}+(-\mathbf{u})$$
-        $$\phantom{(-1)\mathbf{u}}\href{#axiom-8}{=}0\mathbf{u}+(-\mathbf{u})$$
-        $$\phantom{(-1)\mathbf{u}}\href{#property-1}{=}\mathbf{0}+(-\mathbf{u})$$
-        $$\phantom{(-1)\mathbf{u}}\href{#axiom-4}{=}-\mathbf{u}$$
+      <a href="#vector-space-axiom" class="ns-link">벡터공간</a>
+      $V$의 벡터 $\mathbf{u} \in V$에 대해 두 벡터 $\mathbf{v},\mathbf{w} \in V$가 다음을 만족한다고 가정한다.
     </p>
+    <div data-flush-left="0">
+      <ol>
+        <li id="property-4-proof-assumption-1" data-declaration="property-4-proof-declaration">
+          $$\mathbf{u} + \mathbf{v} = \mathbf{0}, \; \mathbf{v} + \mathbf{u} = \mathbf{0}$$
+        </li>
+        <li id="property-4-proof-assumption-2" data-declaration="property-4-proof-declaration">
+          $$\mathbf{u} + \mathbf{w} = \mathbf{0}, \; \mathbf{w} + \mathbf{u} = \mathbf{0}$$
+        </li>
+      </ol>
+    </div>
+    <h6>추론</h6>
+    <p data-flush-left>
+      $$\mathbf{v}\href{#axiom-4}{=}\mathbf{v}+\mathbf{0}$$
+      $$\phantom{\mathbf{v}}\href{#property-4-proof-assumption-2}{=}\mathbf{v} + (\mathbf{u} + \mathbf{w})$$
+      $$\phantom{\mathbf{v}}\href{#axiom-3}{=}(\mathbf{v}+\mathbf{u}) + \mathbf{w}$$
+      $$\phantom{\mathbf{v}}\href{#property-4-proof-assumption-1}{=}\mathbf{0} + \mathbf{w}$$
+      $$\phantom{\mathbf{v}}\href{#axiom-2}{=}\mathbf{w} + \mathbf{0}$$
+      $$\phantom{\mathbf{v}}\href{#axiom-4}{=}\mathbf{w}$$ 두 벡터 $\mathbf{v},\mathbf{w}$는 동일하다.
+    </p>
+    <h6>결론</h6>
+    <p>
+      벡터공간 $V$의 모든 벡터 $\mathbf{u} \in V$에 대해 $\mathbf{u} + \mathbf{v} = \mathbf{0}$를 만족하는 덧셈 역원
+      벡터 $\mathbf{v} \in V$는 유일하다.
+    </p>
+    <h5 id="property-5-proof" class="ns-hidden">5 증명</h5>
+    <p data-flush-left>
+      $$(-1)\mathbf{u}\href{#axiom-4}{=}(-1)\mathbf{u}+\mathbf{0}$$
+      $$\phantom{(-1)\mathbf{u}}\href{#axiom-5}{=}(-1)\mathbf{u}+\{\mathbf{u}+(-\mathbf{u})\}$$
+      $$\phantom{(-1)\mathbf{u}}\href{#axiom-3}{=}\{(-1)\mathbf{u}+\mathbf{u}\}+(-\mathbf{u})$$
+      $$\phantom{(-1)\mathbf{u}}\href{#axiom-10}{=}\{(-1)\mathbf{u}+1\mathbf{u}\}+(-\mathbf{u})$$
+      $$\phantom{(-1)\mathbf{u}}\href{#axiom-8}{=}(-1+1)\mathbf{u}+(-\mathbf{u})$$
+      $$\phantom{(-1)\mathbf{u}}=0\mathbf{u}+(-\mathbf{u})$$
+      $$\phantom{(-1)\mathbf{u}}\href{#property-1}{=}\mathbf{0}+(-\mathbf{u})$$
+      $$\phantom{(-1)\mathbf{u}}\href{#axiom-2}{=}(-\mathbf{u})+\mathbf{0}$$
+      $$\phantom{(-1)\mathbf{u}}\href{#axiom-4}{=}-\mathbf{u}$$
+    </p>
+    <h5 id="property-6-proof" class="ns-hidden">6 증명</h5>
+    <p data-flush-left>
+      $$\phantom{\Rightarrow}\mathbf{u}+\mathbf{w}=\mathbf{v}+\mathbf{w}$$
+      $$\Rightarrow(\mathbf{u}+\mathbf{w})+(-\mathbf{w})=(\mathbf{v}+\mathbf{w})+(-\mathbf{w})$$
+      $$\href{#axiom-3}{\Rightarrow}\mathbf{u}+\{\mathbf{w}+(-\mathbf{w})\}=\mathbf{v}+\{\mathbf{w}+(-\mathbf{w})\}$$
+      $$\href{#axiom-5}{\Rightarrow}\mathbf{u}+\mathbf{0}=\mathbf{v}+\mathbf{0}$$
+      $$\href{#axiom-4}{\Rightarrow}\mathbf{u}=\mathbf{v}$$
+    </p>
+
     <h2>용어</h2>
     <ul>
-        <li>공리 axiom</li>
-        <li>덧셈 addition</li>
-        <li>벡터 vector</li>
-        <li>벡터 공간 vector space</li>
-        <li>스칼라 scalar</li>
-        <li>스칼라곱 scalar multiplication</li>
-        <li>원소 element</li>
-        <li>집합 set</li>
+      <li>공리 axiom</li>
+      <li>덧셈 addition</li>
+      <li>벡터 vector</li>
+      <li>벡터공간 vector space</li>
+      <li>스칼라 scalar</li>
+      <li>스칼라곱 scalar multiplication</li>
+      <li>공집합empty set</li>
+      <li>원소 element</li>
+      <li>집합 set</li>
+      <li>항등원 identity</li>
+      <li>유일성 uniqueness</li>
+      <li>덧셈역원 additive inverse</li>
+      <li>소거법칙 cancellation law</li>
     </ul>
     <!-- footer -->
     <%- include(fromComponents('footer.html')) %>
-</body>
+  </body>
 </html>

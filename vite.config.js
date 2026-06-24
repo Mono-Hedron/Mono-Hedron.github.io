@@ -4,21 +4,18 @@ import { readdirSync, statSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { ViteEjsPlugin } from 'vite-plugin-ejs';
 
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
 
 const srcDir = join(__dirname, 'src');
 const compDir = join(srcDir, 'assets', 'components');
 
-
 function getHtmlEntries(dir, allEntries = {}) {
   const files = readdirSync(dir);
-  files.forEach(file => {
+  files.forEach((file) => {
     const fullPath = join(dir, file);
     if (file === 'assets') return;
-    
+
     if (statSync(fullPath).isDirectory()) {
       getHtmlEntries(fullPath, allEntries);
     } else if (file.endsWith('.html')) {
@@ -32,16 +29,16 @@ function getHtmlEntries(dir, allEntries = {}) {
 
 export default defineConfig({
   base: '/',
-  root: srcDir, 
+  root: srcDir,
   publicDir: join(__dirname, 'public'),
   plugins: [
     ViteEjsPlugin((_viteConfig) => {
       return {
         fromComponents: (...paths) => join(compDir, ...paths),
       };
-    })
+    }),
   ],
-  
+
   build: {
     outDir: join(__dirname, 'dist'),
     emptyOutDir: true,
@@ -49,11 +46,10 @@ export default defineConfig({
     rollupOptions: {
       input: getHtmlEntries(srcDir),
     },
-    
   },
-  
+
   server: {
     // port: 3000,
     open: true,
-  }
+  },
 });

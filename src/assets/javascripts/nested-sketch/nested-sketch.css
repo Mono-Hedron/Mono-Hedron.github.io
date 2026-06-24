@@ -17,246 +17,233 @@
  *         Unlabeled portions may also contain modifications.
  */
 
-
-.nutshell-heading{
-    position:relative;
+.nutshell-heading {
+  position: relative;
 }
-
 
 /***************************************************
 EXPANDABLE LINKS
 ***************************************************/
 
-.nutshell-expandable{
+.nutshell-expandable {
+  /* Boring style to fit parent */
+  color: inherit;
+  text-decoration: none;
+  border-bottom: dotted 1.5px;
 
-    /* Boring style to fit parent */
-    color: inherit;
-    text-decoration: none;
-    border-bottom: dotted 1.5px;
+  /* So those balls work */
+  position: relative;
 
-    /* So those balls work */
-    position:relative;
-
-    /* Animate opacity on hover */
-    transition: opacity 0.1s ease-in-out;
-    opacity: 1;
-
+  /* Animate opacity on hover */
+  transition: opacity 0.1s ease-in-out;
+  opacity: 1;
 }
-.nutshell-expandable:hover{
-    color: inherit;
-    opacity: 0.8;
+.nutshell-expandable:hover {
+  color: inherit;
+  opacity: 0.8;
 }
-
 
 /* Followup! */
-.nutshell-followup{
-    opacity:0.33;
+.nutshell-followup {
+  opacity: 0.33;
 }
 
 /***************************************************
 BUBBLES:
 ***************************************************/
 
-.nutshell-bubble{
+.nutshell-bubble {
+  /* Gon' stretch out */
+  display: inline-block;
+  width: 100%;
 
-    /* Gon' stretch out */
-    display: inline-block;
-    width: 100%;
+  /* It's nice & speech-bubble-lookin' */
+  border: 1px solid black;
+  /*border: 1px solid #ddd;*/
+  border-radius: 20px;
 
-    /* It's nice & speech-bubble-lookin' */
-    border: 1px solid black;
-    /*border: 1px solid #ddd;*/
-    border-radius: 20px;
+  /* For the speech-bubble arrow */
+  position: relative;
+  margin-top: 22px;
 
-    /* For the speech-bubble arrow */
-    position: relative;
-    margin-top: 22px;
-
-    /* For subtle move up & down */
-    position: relative;
-    top: 0;
-    transition: top 0.3s linear;
-
+  /* For subtle move up & down */
+  position: relative;
+  top: 0;
+  transition: top 0.3s linear;
 }
 
 /* Arrow outline */
-.nutshell-bubble-arrow{
-    width: 0;
-    height: 0;
-    border-left: 20px solid transparent;
-    border-right: 20px solid transparent;
-    border-bottom: 20px solid #000;
-    /*border-bottom: 20px solid #ddd;*/
-    position: absolute;
-    top: -20px;
-    pointer-events: none; /* don't block clicking */
-    --arrow-background: #fff; /* css var */
+.nutshell-bubble-arrow {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid #000;
+  /*border-bottom: 20px solid #ddd;*/
+  position: absolute;
+  top: -20px;
+  pointer-events: none; /* don't block clicking */
+  --arrow-background: #fff; /* css var */
 }
 
 /* Arrow white */
-.nutshell-bubble-arrow::after{
-    content: "";
-    width: 0;
-    height: 0;
-    border-left: 20px solid transparent;
-    border-right: 20px solid transparent;
-    border-bottom: 20px solid #fff; /* fallback */
-    border-bottom: 20px solid var(--arrow-background); /* css var */
-    position: absolute;
-    top: 1.5px;
-    left: -20px;
-    pointer-events: none; /* don't block clicking */
+.nutshell-bubble-arrow::after {
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid #fff; /* fallback */
+  border-bottom: 20px solid var(--arrow-background); /* css var */
+  position: absolute;
+  top: 1.5px;
+  left: -20px;
+  pointer-events: none; /* don't block clicking */
 }
 
 /* Overflow: contains the head/section/food */
-.nutshell-bubble-overflow{
-    overflow: hidden;
-    /* [Modified] Mask close button border */
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
+.nutshell-bubble-overflow {
+  overflow: hidden;
+  /* [Modified] Mask close button border */
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
-.nutshell-bubble-overflow[mode=opening]{
-    transition: height 0.3s ease-out; /* Snap to open */
+.nutshell-bubble-overflow[mode='opening'] {
+  transition: height 0.3s ease-out; /* Snap to open */
 }
-.nutshell-bubble-overflow[mode=closing]{
-    transition: height 0.3s ease-in; /* Snap to close */
+.nutshell-bubble-overflow[mode='closing'] {
+  transition: height 0.3s ease-in; /* Snap to close */
 }
-
 
 /* Section */
-.nutshell-bubble-overflow-section{
-    padding: 0 1em;
-    /* padding-bottom: 0.5em; */
-    overflow: hidden; /* to capture full height, including <p>'s margins */
+.nutshell-bubble-overflow-section {
+  padding: 0 1em;
+  /* padding-bottom: 0.5em; */
+  overflow: hidden; /* to capture full height, including <p>'s margins */
 }
-.nutshell-bubble-overflow-section > div{
-    margin: 1em 0; /* if you people forgot to put your text in <p>'s -_- */
+.nutshell-bubble-overflow-section > div {
+  margin: 1em 0; /* if you people forgot to put your text in <p>'s -_- */
 }
 /* [TEST] X-scroll */
 /* .nutshell-bubble-overflow-section > div > *:not(.nutshell-bubble-from){
     overflow-x: auto;
 } */
-.nutshell-bubble-overflow-section img{
-    max-width:100%; /* so it fits */
+.nutshell-bubble-overflow-section img {
+  max-width: 100%; /* so it fits */
 }
-.nutshell-bubble-overflow-section video{
-    max-width:100%; /* so it fits */
+.nutshell-bubble-overflow-section video {
+  max-width: 100%; /* so it fits */
 }
 /* Total hack for nice styling */
-.nutshell-bubble-overflow-section img[data-float=left]{
-    float: left;
-    margin: 1em;
+.nutshell-bubble-overflow-section img[data-float='left'] {
+  float: left;
+  margin: 1em;
 }
-.nutshell-bubble-overflow-section img[data-float=right]{
-    float: right;
-    margin: 1em;
+.nutshell-bubble-overflow-section img[data-float='right'] {
+  float: right;
+  margin: 1em;
 }
-.nutshell-bubble-overflow-section iframe{
-    max-width:100%; /* so it fits */
-    border: 1px solid rgba(0,0,0,0.2);
+.nutshell-bubble-overflow-section iframe {
+  max-width: 100%; /* so it fits */
+  border: 1px solid rgba(0, 0, 0, 0.2);
 }
-.nutshell-bubble-overflow-section .nutshell-bubble{
-    /* So that recursive bubbles don't get squashed too quickly */
-    width: calc(100% + 2em - 6px); /* undo section's padding, minus a gap */
-    position: relative;
-    right: calc(1em - 2px);
+.nutshell-bubble-overflow-section .nutshell-bubble {
+  /* So that recursive bubbles don't get squashed too quickly */
+  width: calc(100% + 2em - 6px); /* undo section's padding, minus a gap */
+  position: relative;
+  right: calc(1em - 2px);
 }
 
 /* From */
-.nutshell-bubble-from{
-    font-size: 0.7em;
-    /* line-height: 0.7em; */
-    margin-bottom: -0.7em;
-    margin-top: -0.7em;
-    opacity: 0.7;
+.nutshell-bubble-from {
+  font-size: 0.7em;
+  /* line-height: 0.7em; */
+  margin-bottom: -0.7em;
+  margin-top: -0.7em;
+  opacity: 0.7;
 }
 
 /* Foot: is a close button, too. */
-.nutshell-bubble-overflow-close{
+.nutshell-bubble-overflow-close {
+  /* A &times; sign */
+  font-family: inherit;
+  font-size: 1rem;
+  text-align: center;
 
-    /* A &times; sign */
-    font-family: inherit;
-    font-size: 1rem;
-    text-align: center;
+  /* Whole-width bottom */
+  position: relative;
+  width: 100%;
+  bottom: 0;
+  border: 0;
+  background: none;
+  /* [Modified] Remove bottom border gap*/
+  margin-bottom: -2px;
+  padding-bottom: 2px;
 
-    /* Whole-width bottom */
-    position:relative;
-    width: 100%;
-    bottom: 0;
-    border: 0;
-    background: none;
-    /* [Modified] Remove bottom border gap*/
-    margin-bottom: -2px;
-    padding-bottom: 2px;
-
-
-    /* A button that gets darker. */
-    cursor:pointer;
-    opacity: 0.33;
-    transition: opacity 0.1s ease-in-out, background 0.1s ease-in-out;
-
+  /* A button that gets darker. */
+  cursor: pointer;
+  opacity: 0.33;
+  transition:
+    opacity 0.1s ease-in-out,
+    background 0.1s ease-in-out;
 }
-.nutshell-bubble-overflow-close:hover{
-    /* [Modified] Change color on hover */
-    background: gainsboro;
-    opacity:1;
+.nutshell-bubble-overflow-close:hover {
+  /* [Modified] Change color on hover */
+  background: gainsboro;
+  opacity: 1;
 }
 
 /* Misc styling for bubbles. I am a busybody. */
-.nutshell-bubble li{
-    margin-bottom: 0.5em;
+.nutshell-bubble li {
+  margin-bottom: 0.5em;
 }
-.nutshell-bubble code{
-    background: #ddd;
-    border-radius: 5px;
-    /*font-weight:100;*/
-    padding: 0 5px;
+.nutshell-bubble code {
+  background: #ddd;
+  border-radius: 5px;
+  /*font-weight:100;*/
+  padding: 0 5px;
 }
-.nutshell-bubble blockquote{
-    /*background: #eee;*/
-    margin-left: 0px;
-    margin-right: 0px;
-    border-left: 0.5em solid #eee;
-    padding: 1px 1em 1px 1.5em;
-    margin-top: 0;
+.nutshell-bubble blockquote {
+  /*background: #eee;*/
+  margin-left: 0px;
+  margin-right: 0px;
+  border-left: 0.5em solid #eee;
+  padding: 1px 1em 1px 1.5em;
+  margin-top: 0;
 }
 
 /***************************************************
 CLOSE ALL NUTSHELLS
 ***************************************************/
 
-#nutshell-close-all{
+#nutshell-close-all {
+  /* Top-right */
+  position: fixed;
+  top: 0;
+  right: 0;
 
-    /* Top-right */
-    position: fixed;
-    top: 0; right: 0;
+  /* Fades in & out */
+  transition: opacity 0.9s ease-in-out;
+  opacity: 0;
+  text-align: right;
+  cursor: pointer;
 
-    /* Fades in & out */
-    transition: opacity 0.9s ease-in-out;
-    opacity: 0;
-    text-align: right;
-    cursor: pointer;
+  /* Little text */
+  font-size: 0.7em;
+  line-height: 1.2em;
 
-    /* Little text */
-    font-size: 0.7em;
-    line-height: 1.2em;
-
-    /* Rounded corner */
-    /*background: inherit;*/
-    background: #fff;
-    padding: 0.7em;
-    border-radius: 0 0 0 1em;
-
+  /* Rounded corner */
+  /*background: inherit;*/
+  background: #fff;
+  padding: 0.7em;
+  border-radius: 0 0 0 1em;
 }
-#nutshell-close-all[show=yes]{
-    opacity:1;
+#nutshell-close-all[show='yes'] {
+  opacity: 1;
 }
-#nutshell-close-all[show=no]{
-    opacity:0;
+#nutshell-close-all[show='no'] {
+  opacity: 0;
 }
-
-
-
 
 /* [MODIFIED] */
 /* [TEST] X-scroll */
@@ -266,10 +253,10 @@ CLOSE ALL NUTSHELLS
 
 /* Make katex link focusable */
 .katex-html a.nutshell-link {
-        position: relative !important;
-        z-index: 10 !important;
-        pointer-events: auto !important;
-        display: inline-block;
+  position: relative !important;
+  z-index: 10 !important;
+  pointer-events: auto !important;
+  display: inline-block;
 }
 
 /*  */
@@ -278,41 +265,42 @@ CLOSE ALL NUTSHELLS
 
 /* Default center alignment */
 :root {
-    --math-align: center;
-    --math-padding: 0;
+  --math-align: center;
+  --math-padding: 0;
 }
 
 /* flush-left */
 [data-flush-left] {
-    --math-align: left;
-    --math-padding: 1em;
+  --math-align: left;
+  --math-padding: 1em;
 }
 
 /* flush-left with zero padding */
-[data-flush-left="0"] {
-    --math-align: left;
-    --math-padding: 0;
+[data-flush-left='0'] {
+  --math-align: left;
+  --math-padding: 0;
 }
 
 /* Initialize on new bubble */
 .nutshell-bubble {
-    --math-align: center;
-    --math-padding: 0;
+  --math-align: center;
+  --math-padding: 0;
 }
 
 /* Apply */
 .katex-display > .katex {
-    text-align: var(--math-align) !important;
-    padding-left: var(--math-padding) !important;
+  text-align: var(--math-align) !important;
+  padding-left: var(--math-padding) !important;
 }
 
-
 /* Link highlight */
-.highlight, .highlight span {
-            background-color: transparent;
-            animation: highlight-fade 1.5s ease-in;
-        }
-:target, :target span {
+.highlight,
+.highlight span {
+  background-color: transparent;
+  animation: highlight-fade 1.5s ease-in;
+}
+:target,
+:target span {
   animation: highlight-fade 1.75s ease-in;
   background-color: transparent;
 }
@@ -325,4 +313,3 @@ CLOSE ALL NUTSHELLS
     background-color: transparent;
   }
 }
-

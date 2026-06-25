@@ -25,7 +25,7 @@ export function hideElements(el = document.body) {
 
   el.querySelectorAll(`:is(${HEADER_TAGS.join(',')}).ns-hidden`).forEach(removeSection);
 
-  el.querySelectorAll(':is(span, div).ns-hidden').forEach((container) => {
+  el.querySelectorAll(':is(span, div, p).ns-hidden').forEach((container) => {
     container.parentNode.removeChild(container);
   });
 }

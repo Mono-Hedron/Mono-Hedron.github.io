@@ -13,23 +13,46 @@
     <hr />
     <h2 id="vector-space-axioms">벡터공간 공리</h2>
     <p>
-      <!-- 실수 체 -->
-      모든 $\mathbf{u},\mathbf{v},\mathbf{w} \in V$와 모든 스칼라 $k, l$에 대해 다음을 만족하는, 덧셈과 스칼라곱이
-      정의된 공집합이 아닌 집합 $V$를
+      다음을 만족하는, 덧셈과 스칼라곱이 정의된 공집합이 아닌 집합 $V$를
       <strong>벡터공간</strong>, $V$의 원소를 <strong>벡터</strong>라고 한다.
     </p>
+    <p id="axioms-declaration" class="ns-hidden">$V$가 벡터공간일 때,</p>
     <div data-flush-left="0">
       <ol>
-        <li id="axiom-1">$$\mathbf{u}+\mathbf{v} \in V$$</li>
-        <li id="axiom-2">$$\mathbf{u}+\mathbf{v}=\mathbf{v}+\mathbf{u}$$</li>
-        <li id="axiom-3">$$\mathbf{u}+(\mathbf{v}+\mathbf{w})=(\mathbf{u}+\mathbf{v})+\mathbf{w}$$</li>
-        <li id="axiom-4">$$\exists \mathbf{0} \in V \quad \text{s.t.} \quad \mathbf{u}+\mathbf{0}=\mathbf{u}$$</li>
-        <li id="axiom-5">$$\exists -\mathbf{u} \in V \quad \text{s.t.} \quad \mathbf{u}+(-\mathbf{u})=\mathbf{0}$$</li>
-        <li id="axiom-6">$$ k\mathbf{u} \in V$$</li>
-        <li id="axiom-7">$$k(\mathbf{u}+\mathbf{v})=k\mathbf{u}+k\mathbf{v}$$</li>
-        <li id="axiom-8">$$(k+l)\mathbf{u}=k\mathbf{u}+l\mathbf{u}$$</li>
-        <li id="axiom-9">$$k(l\mathbf{u})=(kl)\mathbf{u}$$</li>
-        <li id="axiom-10">$$1\mathbf{u}=\mathbf{u}$$</li>
+        <li id="axiom-1" data-declaration="axioms-declaration">
+          $$\forall \mathbf{u}, \mathbf{v} \in V, \quad \mathbf{u}+\mathbf{v} \in V$$
+        </li>
+        <li id="axiom-2" data-declaration="axioms-declaration">
+          $$\forall \mathbf{u}, \mathbf{v} \in V, \quad \mathbf{u}+\mathbf{v}=\mathbf{v}+\mathbf{u}$$
+        </li>
+        <li id="axiom-3" data-declaration="axioms-declaration">
+          $$\forall \mathbf{u}, \mathbf{v}, \mathbf{w} \in V, \quad
+          \mathbf{u}+(\mathbf{v}+\mathbf{w})=(\mathbf{u}+\mathbf{v})+\mathbf{w}$$
+        </li>
+        <li id="axiom-4" data-declaration="axioms-declaration">
+          $$\exists \mathbf{0} \in V \quad \text{s.t.} \quad \forall \mathbf{u}\in V \quad
+          \mathbf{u}+\mathbf{0}=\mathbf{u}$$
+        </li>
+        <li id="axiom-5" data-declaration="axioms-declaration">
+          $$\forall \mathbf{u}\in V, \quad \exists -\mathbf{u} \in V \quad \text{s.t.} \quad
+          \mathbf{u}+(-\mathbf{u})=\mathbf{0}$$
+        </li>
+        <li id="axiom-6" data-declaration="axioms-declaration">
+          $$\forall \mathbf{u}\in V, \; \forall k \in F, \quad k\mathbf{u} \in V$$
+        </li>
+        <li id="axiom-7" data-declaration="axioms-declaration">
+          $$\forall \mathbf{u}, \mathbf{v}\in V, \; \forall k \in F, \quad
+          k(\mathbf{u}+\mathbf{v})=k\mathbf{u}+k\mathbf{v}$$
+        </li>
+        <li id="axiom-8" data-declaration="axioms-declaration">
+          $$\forall \mathbf{u}\in V, \; \forall k, l \in F, \quad (k+l)\mathbf{u}=k\mathbf{u}+l\mathbf{u}$$
+        </li>
+        <li id="axiom-9" data-declaration="axioms-declaration">
+          $$\forall \mathbf{u}\in V, \; \forall k, l \in F, \quad k(l\mathbf{u})=(kl)\mathbf{u}$$
+        </li>
+        <li id="axiom-10" data-declaration="axioms-declaration">
+          $$\forall \mathbf{u}\in V, \quad 1\mathbf{u}=\mathbf{u}$$
+        </li>
       </ol>
     </div>
     <h2 id="properties-of-vector-space">벡터공간의 성질</h2>

@@ -12,39 +12,79 @@
     <hr />
     <h2 id="definition">정의</h2>
     <p>
-      <a href="/linear-algebra/vector-space#vector-space-axiom" class="ns-link">벡터공간</a>
+      <a href="/linear-algebra/vector-space#vector-space-axioms" class="ns-link">벡터공간</a>
       $V$의 공집합이 아닌 부분집합 $W \subseteq V$가 $V$의 스칼라곱과 덧셈이 정의된 벡터공간일 때, $W$를 $V$의
       <strong>부분공간</strong>이라고 한다.
     </p>
     <h2>필요충분조건</h2>
     <p>
       $W \subseteq V$가
-      <a href="/linear-algebra/vector-space#vector-space-axiom" class="ns-link">벡터공간</a>
+      <a href="/linear-algebra/vector-space#vector-space-axioms" class="ns-link">벡터공간</a>
       $V$의 공집합이 아닌 부분집합일 때, 다음은 동치이다.
     </p>
     <ol data-flush-left="0">
       <li>$W$는 $V$의 부분공간이다.</li>
       <li>
-        $$\forall \mathbf{u}, \mathbf{v} \in W, \; \forall k \in \mathbb{R} \quad \mathbf{u}+\mathbf{v} \in W \land
-        k\mathbf{u} \in W \tag{\href{#iff-proof}{\text{증명}}}$$
+        $$\left( \forall \mathbf{u}, \mathbf{v} \in W, \quad \mathbf{u}+\mathbf{v} \in W \right) \;\land\; \left(
+        \forall \mathbf{u} \in W, \; \forall k \in \mathbb{R}, \quad k\mathbf{u} \in W \right)
+        \tag{\href{#equivalence-proof}{\text{증명}}}$$
+        <span id="equivalence-2-1" class="ns-hidden"
+          >$$\forall \mathbf{u}, \mathbf{v} \in W, \quad \mathbf{u}+\mathbf{v} \in W \right$$</span
+        >
+        <span id="equivalence-2-2" class="ns-hidden"
+          >$$\forall \mathbf{u} \in W, \; \forall k \in \mathbb{R}, \quad k\mathbf{u} \in W $$</span
+        >
       </li>
     </ol>
-    <h5 id="iff-proof" class="ns-hidden">필요충분조건 증명</h5>
+    <h5 id="equivalence-proof" class="ns-hidden">필요충분조건 증명</h5>
     <p>
-      $(1)\Rightarrow (2)$:
+      $(1) \implies (2)$:
       <a href="#definition" class="ns-link">정의</a>에 따라, $W$는
-      <a href="/linear-algebra/vector-space#vector-space-axiom" class="ns-link">벡터공간</a>이다. 따라서 $W$는 벡터공간
-      공리 <a href="/linear-algebra/vector-space#axiom-1" class="ns-link">1</a>,
-      <a href="/linear-algebra/vector-space#axiom-6" class="ns-link">6</a>을 만족한다.
+      <a href="/linear-algebra/vector-space#vector-space-axioms" class="ns-link">벡터공간</a>이다. $W$는 벡터공간 공리
+      <a href="/linear-algebra/vector-space#axiom-1" class="ns-link">1</a>,
+      <a href="/linear-algebra/vector-space#axiom-6" class="ns-link">6</a>을 만족한다. 따라서 $W$는 $(2)$의 두 조건을
+      만족한다.
     </p>
     <p>
-      $(2)\Rightarrow (1)$: $W \subseteq V$가
-      <a href="/linear-algebra/vector-space#vector-space-axiom" class="ns-link">벡터공간</a>
-      $V$의 공집합이 아닌 부분집합이므로, $\forall \mathbf{u} \in W \implies \mathbf{u} \in V$이다. 따라서 $W$는
-      벡터공간 공리 2, 3, 7, 8, 9, 10을 만족한다. 조건에 따라, $W$는 벡터공간 공리 1, 6을 만족한다. 벡터공간 공리 6에
-      스칼라 0, -1을 대입하면 벡터공간 공리 4, 5가 각각 만족됨을 알 수 있다. $W$는 벡터공간 공리를 만족하므로
-      벡터공간이다.
+      $(2) \implies (1)$: $W \subseteq V$가 벡터공간 $V$의 공집합이 아닌 부분집합이므로, $\forall \mathbf{u} \in W,
+      \quad \mathbf{u} \in V$이다. 따라서 $W$는 벡터공간 공리 2, 3, 7, 8, 9, 10을 만족한다. 조건에 따라, $W$는 벡터공간
+      공리 1, 6을 만족한다.
     </p>
+    <h6><a href="/linear-algebra/vector-space#axiom-4" class="ns-link">공리 4</a></h6>
+    <p data-flush-left>
+      <!-- prettier-ignore -->
+      <span>
+        $$ \begin{aligned} 
+
+        W \neq \emptyset &\implies \exists \mathbf{w} \in W \\ 
+
+        &\href{#equivalence-2-2}{\implies}  0\mathbf{w} \in W \; \land \; 0\mathbf{w} \in V\\ 
+
+        &\href{/linear-algebra/vector-space#property-1}{\implies}  \mathbf{0} \in W 
+        \quad \text{s.t.} \quad 
+        \forall \mathbf{u} \in W \quad \mathbf{u}+\mathbf{0}=\mathbf{u}\\
+
+        \end{aligned} $$
+      </span>
+    </p>
+    <h6><a href="/linear-algebra/vector-space#axiom-5" class="ns-link">공리 5</a></h6>
+    <p data-flush-left>
+      <!-- prettier-ignore -->
+      <span>
+        $$ \begin{aligned} 
+
+        &\forall \mathbf{u} \in W, \; \forall k \in \mathbb{R}, \quad k\mathbf{u} \in W \\
+
+        &\implies \forall \mathbf{u} \in W, \quad (-1)\mathbf{u} \in W \; \land \; (-1)\mathbf{u} \in V\\
+
+        &\href{/linear-algebra/vector-space#property-3}{\implies} 
+        \forall \mathbf{u} \in W, \quad -\mathbf{u} \in W 
+        \quad \text{s.t.} \quad 
+        \mathbf{u}+(-\mathbf{u})=\mathbf{0} \\
+        \end{aligned} $$
+      </span>
+    </p>
+    <p>$W$는 벡터공간 공리를 만족한다. $W$는 벡터공간이다. 따라서 $W$는 $V$의 부분공간이다.</p>
 
     <h2>용어</h2>
     <ul>
@@ -55,12 +95,12 @@
       <li>스칼라 scalar</li>
       <li>스칼라곱 scalar multiplication</li>
       <li>공집합empty set</li>
-      <li>원소 element</li>
+      <!-- <li>원소 element</li> -->
       <li>집합 set</li>
-      <li>항등원 identity</li>
-      <li>유일성 uniqueness</li>
-      <li>덧셈역원 additive inverse</li>
-      <li>소거법칙 cancellation law</li>
+      <!-- <li>항등원 identity</li> -->
+      <!-- <li>유일성 uniqueness</li> -->
+      <!-- <li>덧셈역원 additive inverse</li> -->
+      <!-- <li>소거법칙 cancellation law</li> -->
       <li>부분집합 subset</li>
       <li>부분공간 subspace</li>
     </ul>

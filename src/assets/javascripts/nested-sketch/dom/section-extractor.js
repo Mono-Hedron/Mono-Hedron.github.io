@@ -227,7 +227,7 @@ function searchByText(queryKeys, safeEl) {
 /////////////////////////////////////////////////////////////////////
 function getInnerContent(node) {
   const tagName = node.tagName.toLowerCase();
-  return tagName === 'span' ? `<p>${node.innerHTML}</p>` : node.innerHTML;
+  return tagName === 'span' || tagName === 'p' ? `<p>${node.innerHTML}</p>` : node.innerHTML;
 }
 
 function parseQueryString(queryString) {

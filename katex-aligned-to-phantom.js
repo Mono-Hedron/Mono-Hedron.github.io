@@ -12,19 +12,19 @@ export function katexAlignedToPhantomPlugin() {
 
         if (lines.length === 0) return match;
 
-        const firstLineParts = lines[0].split('&');
-        const leftHandSide = firstLineParts[0].trim();
-
-        const convertedLines = lines.map((line, index) => {
-          if (index === 0) {
-            return `$$${line.replace('&', '')}$$`;
-          } else {
-            // return `$$${line.replace('&', `\\phantom{${leftHandSide}}`)}$$`;
-            if (line.startsWith('&')) {
-              return `$$\\phantom{${leftHandSide}}${line.slice(1)}$$`;
-            }
-            return `$$${line.replace('&', `\\phantom{${leftHandSide}}`)}$$`;
+        let leftHandSide = '';
+        for (const line of lines) {
+          if (line.includes('&') && !line.startsWith('&')) {
+            leftHandSide = line.split('&')[0].trim();
+            break;
           }
+        }
+
+        const convertedLines = lines.map((line) => {
+          if (!line.startsWith('&')) {
+            return `$$${line.replace('&', '')}$$`;
+          }
+          return `$$\\phantom{${leftHandSide}}${line.slice(1)}$$`;
         });
 
         return convertedLines.join('\n');

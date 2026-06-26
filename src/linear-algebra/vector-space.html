@@ -26,26 +26,26 @@
           $$\forall \mathbf{u}, \mathbf{v} \in V, \quad \mathbf{u}+\mathbf{v}=\mathbf{v}+\mathbf{u}$$
         </li>
         <li id="axiom-3" data-declaration="axioms-declaration">
-          $$\forall \mathbf{u}, \mathbf{v}, \mathbf{w} \in V, \quad
-          \mathbf{u}+(\mathbf{v}+\mathbf{w})=(\mathbf{u}+\mathbf{v})+\mathbf{w}$$
+          $$\forall \mathbf{u}, \mathbf{v}, \mathbf{w} \in V,$$
+          $$\mathbf{u}+(\mathbf{v}+\mathbf{w})=(\mathbf{u}+\mathbf{v})+\mathbf{w}$$
         </li>
         <li id="axiom-4" data-declaration="axioms-declaration">
           $$\exists \mathbf{0} \in V \quad \text{s.t.} \quad \forall \mathbf{u}\in V \quad
           \mathbf{u}+\mathbf{0}=\mathbf{u}$$
         </li>
         <li id="axiom-5" data-declaration="axioms-declaration">
-          $$\forall \mathbf{u}\in V, \quad \exists -\mathbf{u} \in V \quad \text{s.t.} \quad
+          $$\forall \mathbf{u}\in V$$ $$\exists -\mathbf{u} \in V \quad \text{s.t.} \quad
           \mathbf{u}+(-\mathbf{u})=\mathbf{0}$$
         </li>
         <li id="axiom-6" data-declaration="axioms-declaration">
           $$\forall \mathbf{u}\in V, \; \forall k \in F, \quad k\mathbf{u} \in V$$
         </li>
         <li id="axiom-7" data-declaration="axioms-declaration">
-          $$\forall \mathbf{u}, \mathbf{v}\in V, \; \forall k \in F, \quad
-          k(\mathbf{u}+\mathbf{v})=k\mathbf{u}+k\mathbf{v}$$
+          $$\forall \mathbf{u}, \mathbf{v}\in V, \; \forall k \in F,$$
+          $$k(\mathbf{u}+\mathbf{v})=k\mathbf{u}+k\mathbf{v}$$
         </li>
         <li id="axiom-8" data-declaration="axioms-declaration">
-          $$\forall \mathbf{u}\in V, \; \forall k, l \in F, \quad (k+l)\mathbf{u}=k\mathbf{u}+l\mathbf{u}$$
+          $$\forall \mathbf{u}\in V, \; \forall k, l \in F,$$ $$(k+l)\mathbf{u}=k\mathbf{u}+l\mathbf{u}$$
         </li>
         <li id="axiom-9" data-declaration="axioms-declaration">
           $$\forall \mathbf{u}\in V, \; \forall k, l \in F, \quad k(l\mathbf{u})=(kl)\mathbf{u}$$
@@ -213,9 +213,9 @@
       <span>
         $$ \begin{aligned}
         (-1)\mathbf{u} &\href{#axiom-4}{=}(-1)\mathbf{u}+\mathbf{0} \\
-        &\href{#axiom-5}{=}(-1)\mathbf{u}+\{\mathbf{u}+(-\mathbf{u})\} \\
-        &\href{#axiom-3}{=}\{(-1)\mathbf{u}+\mathbf{u}\}+(-\mathbf{u}) \\
-        &\href{#axiom-10}{=}\{(-1)\mathbf{u}+1\mathbf{u}\}+(-\mathbf{u}) \\
+        &\href{#axiom-5}{=}(-1)\mathbf{u}+[\mathbf{u}+(-\mathbf{u})] \\
+        &\href{#axiom-3}{=}[(-1)\mathbf{u}+\mathbf{u}]+(-\mathbf{u}) \\
+        &\href{#axiom-10}{=}[(-1)\mathbf{u}+1\mathbf{u}]+(-\mathbf{u}) \\
         &\href{#axiom-8}{=}(-1+1)\mathbf{u}+(-\mathbf{u}) \\
         &=0\mathbf{u}+(-\mathbf{u}) \\
         &\href{#property-1}{=}\mathbf{0}+(-\mathbf{u}) \\
@@ -225,13 +225,13 @@
        </span>
     </p>
     <h5 id="property-6-proof" class="ns-hidden">6 증명</h5>
-    <p data-flush-left>
+    <p data-flush-left="0">
       <!-- prettier-ignore -->
       <span>
         $$ \begin{aligned}
         &\mathbf{u}+\mathbf{w}=\mathbf{v}+\mathbf{w} \\
         \implies &(\mathbf{u}+\mathbf{w})+(-\mathbf{w})=(\mathbf{v}+\mathbf{w})+(-\mathbf{w}) \\
-        \href{#axiom-3}{\implies} &\mathbf{u}+\{\mathbf{w}+(-\mathbf{w})\}=\mathbf{v}+\{\mathbf{w}+(-\mathbf{w})\} \\
+        \href{#axiom-3}{\implies} &\mathbf{u}+[\mathbf{w}+(-\mathbf{w})]=\mathbf{v}+[\mathbf{w}+(-\mathbf{w})] \\
         \href{#axiom-5}{\implies} &\mathbf{u}+\mathbf{0}=\mathbf{v}+\mathbf{0} \\
         \href{#axiom-4}{\implies} &\mathbf{u}=\mathbf{v} \\
         \end{aligned} $$ 

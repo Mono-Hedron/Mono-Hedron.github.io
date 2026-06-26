@@ -32,14 +32,14 @@
       <li>$W$는 $V$의 부분공간이다.</li>
       <li>
         $$\left( \forall \mathbf{u}, \mathbf{v} \in W, \quad \mathbf{u}+\mathbf{v} \in W \right) \;\land\; \left(
-        \forall \mathbf{u} \in W, \; \forall k \in \mathbb{R}, \quad k\mathbf{u} \in W \right)
+        \forall \mathbf{u} \in W, \; \forall k \in F, \quad k\mathbf{u} \in W \right)
         \tag{\href{#equivalence-proof}{\text{증명}}}$$
-        <span id="equivalence-2-1" class="ns-hidden"
-          >$$\forall \mathbf{u}, \mathbf{v} \in W, \quad \mathbf{u}+\mathbf{v} \in W \right$$</span
-        >
-        <span id="equivalence-2-2" class="ns-hidden"
-          >$$\forall \mathbf{u} \in W, \; \forall k \in \mathbb{R}, \quad k\mathbf{u} \in W $$</span
-        >
+        <span id="equivalence-2-1" class="ns-hidden">
+          $$\forall \mathbf{u}, \mathbf{v} \in W, \quad \mathbf{u}+\mathbf{v} \in W$$
+        </span>
+        <span id="equivalence-2-2" class="ns-hidden">
+          $$\forall \mathbf{u} \in W, \; \forall k \in F, \quad k\mathbf{u} \in W $$
+        </span>
       </li>
     </ol>
     <h5 id="equivalence-proof" class="ns-hidden">필요충분조건 증명</h5>
@@ -79,9 +79,9 @@
       <span>
         $$ \begin{aligned} 
 
-        &\forall \mathbf{u} \in W, \; \forall k \in \mathbb{R}, \quad k\mathbf{u} \in W \\
+        &\forall \mathbf{u} \in W, \; \forall k \in F, \quad k\mathbf{u} \in W \\
 
-        &\implies \forall \mathbf{u} \in W, \quad (-1)\mathbf{u} \in W \; \land \; (-1)\mathbf{u} \in V\\
+        &\implies \forall \mathbf{u} \in W, \quad (-1)\mathbf{u} \in W \; \land \; (-1)\mathbf{u} \in V \\
 
         &\href{/linear-algebra/vector-space#property-3}{\implies} 
         \forall \mathbf{u} \in W, \quad -\mathbf{u} \in W 

@@ -294,11 +294,10 @@ function addSource(url) {
           block: 'center',
         });
 
+        targetElement.classList.remove('highlight');
+        // Reflow
+        void targetElement.offsetWidth;
         targetElement.classList.add('highlight');
-
-        setTimeout(() => {
-          targetElement.classList.remove('highlight');
-        }, 2000);
       });
     }
 

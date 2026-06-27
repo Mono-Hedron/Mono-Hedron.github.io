@@ -47,6 +47,9 @@ export function createBubble(expandable, clickX, convertLinksToExpandables) {
   // Make a bubble container!
   let bubble = document.createElement('div');
   bubble.className = 'nutshell-bubble';
+  if (getListRoot(expandable)) {
+    bubble.classList.add('ns-list-bubble');
+  }
 
   Object.assign(bubble.style, {
     top: '0px',
@@ -192,6 +195,23 @@ export function createBubble(expandable, clickX, convertLinksToExpandables) {
   return bubble;
 }
 
+/**
+ * Get the direct ancestor \<ol\>, \<ul\> of the expandable.
+ * Return null if a bubble exists between them.
+ *
+ * @param {Element} expandable
+ * @returns Element | null
+ */
+function getListRoot(expandable) {
+  const closestList = expandable.closest('ol, ul');
+  if (!closestList) return null;
+
+  const closestBubble = expandable.closest('.nutshell-bubble-overflow-section');
+  if (!closestBubble || closestBubble.contains(closestList)) return closestList;
+
+  return null;
+}
+
 function getInheritedBackgroundColor(startElement, parentStyle) {
   let bgColor = parentStyle.backgroundColor;
   let currentElem = startElement.parentNode;
@@ -206,20 +226,26 @@ function getInheritedBackgroundColor(startElement, parentStyle) {
 }
 
 function calculateArrowLeft(expandable, clickX) {
-  let arrowCenter = clickX;
+  const listRoot = getListRoot(expandable);
+  const listPadding = listRoot ? parseInt(window.getComputedStyle(listRoot).paddingLeft, 10) : 0;
 
-  const paragraph = expandable.closest('p, .katex-display') || document.body;
+  let arrowCenter = clickX + listPadding;
+
+  const paragraph = expandable.closest('p, li, .katex-display') || document.body;
   const paragraphWidth = paragraph.getBoundingClientRect().width;
+  const reflectedParagraphWidth = paragraphWidth + listPadding;
 
   const container = paragraph.closest('.nutshell-bubble-overflow-section');
-  if (container) {
-    const sectionWidth = container.getBoundingClientRect().width;
-    const padding = (sectionWidth - paragraphWidth) / 2;
+  if (container?.contains(paragraph)) {
+    const containerWidth = container.getBoundingClientRect().width;
+    const padding = (containerWidth - reflectedParagraphWidth) / 2;
     arrowCenter += padding;
   }
 
+  const bubbleWidth = container ? container.getBoundingClientRect().width - 6 : reflectedParagraphWidth;
+
   const ARROW_MIN_PADDING = BUBBLE_RADIUS + ARROW_HALF_WIDTH;
-  const ARROW_MAX_PADDING = paragraphWidth - ARROW_MIN_PADDING;
+  const ARROW_MAX_PADDING = bubbleWidth - ARROW_MIN_PADDING;
 
   if (arrowCenter < ARROW_MIN_PADDING) arrowCenter = ARROW_MIN_PADDING;
   if (arrowCenter > ARROW_MAX_PADDING) arrowCenter = ARROW_MAX_PADDING;

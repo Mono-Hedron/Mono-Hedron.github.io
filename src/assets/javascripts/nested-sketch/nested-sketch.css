@@ -61,6 +61,7 @@ BUBBLES:
   border: 1px solid black;
   /*border: 1px solid #ddd;*/
   border-radius: 20px;
+  box-sizing: border-box;
 
   /* For the speech-bubble arrow */
   position: relative;
@@ -151,7 +152,19 @@ BUBBLES:
   /* So that recursive bubbles don't get squashed too quickly */
   width: calc(100% + 2em - 6px); /* undo section's padding, minus a gap */
   position: relative;
-  right: calc(1em - 2px);
+  right: calc(1em - 3px);
+}
+
+/* <li> root bubble */
+.nutshell-bubble.ns-list-bubble {
+  display: block;
+  width: auto;
+  margin-left: -40px;
+  /* margin-right: -1em !important; */
+}
+
+.nutshell-bubble-overflow-section .nutshell-bubble.ns-list-bubble {
+  width: calc(100% + 2em - 6px + 40px);
 }
 
 /* From */

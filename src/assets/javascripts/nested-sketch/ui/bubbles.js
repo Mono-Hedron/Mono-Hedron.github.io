@@ -231,7 +231,7 @@ function calculateArrowLeft(expandable, clickX) {
 
   let arrowCenter = clickX + listPadding;
 
-  const paragraph = expandable.closest('p, li, .katex-display') || document.body;
+  const paragraph = expandable.closest('p, li, h6, .katex-display') || document.body;
   const paragraphWidth = paragraph.getBoundingClientRect().width;
   const reflectedParagraphWidth = paragraphWidth + listPadding;
 

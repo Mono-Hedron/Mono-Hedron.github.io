@@ -307,13 +307,12 @@ CLOSE ALL NUTSHELLS
 }
 
 /* Link highlight */
-.highlight,
-.highlight span {
-  background-color: transparent;
-  animation: highlight-fade 1.5s ease-in;
-}
-:target,
+.highlight span,
 :target span {
+  background-color: transparent;
+}
+.highlight,
+:target {
   animation: highlight-fade 1.75s ease-in;
   background-color: transparent;
 }

@@ -3,6 +3,16 @@ import { renderKatex } from '../utils/renderer.js';
 import state, { ANIM_TIME } from '../core/state.js';
 import { updateCloseAllNutshells } from './close-all.js';
 
+// constants
+const OFFSET_Y = '-5px';
+const DEFAULT_BG_COLOR = '#fff';
+const TRANSPARENT_RGBA = 'rgba(0, 0, 0, 0)';
+const ARROW_HALF_WIDTH = 20;
+const BUBBLE_RADIUS = 20;
+const LOADING_DOTS_START = 10;
+const LOADING_DOTS_INTERVAL = 1000;
+const FAILSAFE_MAX = 10;
+
 /////////////////////////////////////////////////////////////////////
 // ⭐️ Create & return bubble, using an expandable's data
 /////////////////////////////////////////////////////////////////////
@@ -31,94 +41,47 @@ export function createBubble(expandable, clickX, convertLinksToExpandables) {
         - then delete bubble element
 
     **************************/
+  const parentNodeStyle = window.getComputedStyle(document.body);
+  const bgColor = getInheritedBackgroundColor(expandable, parentNodeStyle);
 
   // Make a bubble container!
   let bubble = document.createElement('div');
   bubble.className = 'nutshell-bubble';
-  // Subtly move down
-  bubble.style.top = '-5px';
-  setTimeout(() => {
-    bubble.style.top = '0px';
-  }, 1);
-  // RESET FONT STYLE to that of first parent node. Or document.body.
-  let p = expandable.parentNode ?? document.body;
-  // let p = document.body;
-  // [TEST 1.10]
-  let parentNodeStyle = window.getComputedStyle(document.body);
-  bubble.style.color = parentNodeStyle.color;
-  bubble.style.fontSize = parentNodeStyle.fontSize;
-  bubble.style.fontStyle = parentNodeStyle.fontStyle;
-  bubble.style.fontWeight = parentNodeStyle.fontWeight;
-  bubble.style.lineHeight = parentNodeStyle.lineHeight;
-  bubble.style.textDecoration = parentNodeStyle.textDecoration;
 
-  bubble.style.textAlign = 'left';
+  Object.assign(bubble.style, {
+    top: '0px',
+    color: parentNodeStyle.color,
+    fontSize: parentNodeStyle.fontSize,
+    fontStyle: parentNodeStyle.fontStyle,
+    fontWeight: parentNodeStyle.fontWeight,
+    lineHeight: parentNodeStyle.lineHeight,
+    textDecoration: parentNodeStyle.textDecoration,
+    textAlign: 'left',
+    borderColor: parentNodeStyle.color,
+    background: bgColor,
+  });
 
-  // A speech-bubble arrow, positioned at X of *where you clicked*???
-  let arrow = document.createElement('div');
+  const arrow = document.createElement('div');
   arrow.className = 'nutshell-bubble-arrow';
+  arrow.style.borderBottomColor = parentNodeStyle.color;
+  arrow.style.setProperty('--arrow-background', bgColor);
+  arrow.style.left = `${calculateArrowLeft(expandable, clickX)}px`;
   bubble.appendChild(arrow);
 
-  // ARROW & BUBBLE COLOR. Background is background, Border is font color...
-  bubble.style.borderColor = parentNodeStyle.color;
-  arrow.style.borderBottomColor = parentNodeStyle.color;
-  // HACK... keep bubbling up until you get a parent with a non-transparent BG color
-  let bgColor = parentNodeStyle.backgroundColor;
-  let tryThisElementNext = p.parentNode;
-  let failsafe = 10;
-  while (bgColor == 'rgba(0, 0, 0, 0)' && tryThisElementNext && tryThisElementNext.tagName && failsafe-- > 0) {
-    bgColor = window.getComputedStyle(tryThisElementNext).backgroundColor;
-    tryThisElementNext = tryThisElementNext.parentNode;
-  }
-  if (bgColor == 'rgba(0, 0, 0, 0)') {
-    bgColor = '#fff'; // worst case, default to white.
-  }
-  arrow.style.setProperty('--arrow-background', bgColor);
-  bubble.style.background = bgColor;
-
-  // Position the arrow, starting at 20px left of the click...
-  // SO HACKY.
-  {
-    // (since 22px is half the arrow's width, plus border)
-    let arrowX = clickX - 20;
-
-    // What's width of the paragraph the expandable is in?
-    let p = expandable.closest('p, .katex-display');
-    p ??= document.body; // oh whatever, by default.
-    let paragraphWidth = p.getBoundingClientRect().width;
-
-    // What's the width of the container the expandable is in?
-    let cont = p.closest('.nutshell-bubble-overflow-section');
-    if (cont) {
-      let sectionWidth = cont.getBoundingClientRect().width,
-        padding = (sectionWidth - paragraphWidth) / 2;
-      // console.log(paragraphWidth, sectionWidth);
-      arrowX += padding - 3; // iunno, border & padding
-    }
-
-    // Don't let the arrow go past bubble's rounded corners (20px)
-    if (arrowX < 20) arrowX = 20; // left
-    // [Modified] Consider arrow width 40 -> 20+40=60
-    if (arrowX > paragraphWidth - 60) arrowX = paragraphWidth - 60; // right
-
-    // Finally, place that arrow.
-    arrow.style.left = arrowX + 'px';
-  }
-
   // The Overflow container
-  let overflow = document.createElement('div');
+  const overflow = document.createElement('div');
   overflow.className = 'nutshell-bubble-overflow';
   overflow.setAttribute('mode', 'opening');
   overflow.style.height = '0px'; // start closed
   bubble.appendChild(overflow);
 
   // Section
-  let section = document.createElement('div');
+  const section = document.createElement('div');
   section.className = 'nutshell-bubble-overflow-section';
   overflow.appendChild(section);
 
   // Close Button
-  let close = document.createElement('button');
+  const close = document.createElement('button');
   close.className = 'nutshell-bubble-overflow-close';
   close.innerHTML = '&times;';
   close.ariaLabel = 'Close';
@@ -127,7 +90,7 @@ export function createBubble(expandable, clickX, convertLinksToExpandables) {
     expandable.close();
 
     // Then scroll to that parent expandable *if it's offscreen*
-    let parentTop = expandable.getBoundingClientRect().top;
+    const parentTop = expandable.getBoundingClientRect().top;
     if (parentTop < 0) {
       window.scrollTo({
         top: parentTop + window.pageYOffset,
@@ -142,7 +105,7 @@ export function createBubble(expandable, clickX, convertLinksToExpandables) {
   /////////////////////////
 
   // For "..." loading anim
-  let _isSectionLoadedYet = false;
+  let isSectionLoaded = false;
 
   // Get the section (using expandable's data),
   // and put it in bubble's Section Container when it loads!
@@ -159,7 +122,8 @@ export function createBubble(expandable, clickX, convertLinksToExpandables) {
 
     // And animate expand for new content! Go to full height, then auto.
     // console.log(section.getBoundingClientRect().height, )
-    overflow.style.height = section.getBoundingClientRect().height + close.getBoundingClientRect().height + 'px';
+    const targetHeight = section.getBoundingClientRect().height + close.getBoundingClientRect().height;
+    overflow.style.height = `${targetHeight}px`;
     setTimeout(() => {
       overflow.style.height = 'auto';
     }, ANIM_TIME);
@@ -170,32 +134,30 @@ export function createBubble(expandable, clickX, convertLinksToExpandables) {
     }
 
     // Yes.
-    _isSectionLoadedYet = true;
+    isSectionLoaded = true;
   });
 
   // While waiting to load, show "..." anim
   setTimeout(() => {
-    if (!_isSectionLoadedYet) {
-      // Dots: add a dot per second...
-      let dots = document.createElement('p');
-      dots.innerHTML = '...'; // start with 3.
-      // Doing recursive setTimeout instead of "setInterval"
-      // so I don't deal with figuring out how to clear an interval
-      // from the above Promise with a totally different scope:
-      let _addDot = () => {
-        if (!_isSectionLoadedYet) {
-          dots.innerHTML += '.';
-          setTimeout(_addDot, 1000);
-        }
-      };
-      _addDot();
+    if (isSectionLoaded) return;
+    // Dots: add a dot per second...
+    const dots = document.createElement('p');
+    dots.innerHTML = '...'; // start with 3.
+    // Doing recursive setTimeout instead of "setInterval"
+    // so I don't deal with figuring out how to clear an interval
+    // from the above Promise with a totally different scope:
+    const addDot = () => {
+      if (isSectionLoaded) return;
+      dots.innerHTML += '.';
+      setTimeout(addDot, LOADING_DOTS_INTERVAL);
+    };
+    addDot();
 
-      // Animate to height of the dots
-      section.innerHTML = '';
-      section.appendChild(dots);
-      overflow.style.height = section.getBoundingClientRect().height + 'px';
-    }
-  }, 10);
+    // Animate to height of the dots
+    section.innerHTML = '';
+    section.appendChild(dots);
+    overflow.style.height = `${section.getBoundingClientRect().height}px`;
+  }, LOADING_DOTS_START);
 
   /////////////////////////
   // CLOSING //////////////
@@ -204,10 +166,10 @@ export function createBubble(expandable, clickX, convertLinksToExpandables) {
   // Close Animation
   bubble.close = () => {
     // Subtly move up
-    bubble.style.top = '-5px';
+    bubble.style.top = OFFSET_Y;
 
     // Can't start an animation from "auto", so set height to current height
-    overflow.style.height = overflow.getBoundingClientRect().height + 'px';
+    overflow.style.height = `${overflow.getBoundingClientRect().height}px`;
 
     // NOW close it.
     setTimeout(() => {
@@ -217,7 +179,7 @@ export function createBubble(expandable, clickX, convertLinksToExpandables) {
 
     // Afterwards, delete node.
     setTimeout(() => {
-      bubble.parentNode.removeChild(bubble);
+      bubble.parentNode?.removeChild(bubble);
       expandable.setAttribute('mode', 'closed'); // and tell Expandable to show it, too
     }, ANIM_TIME + 1);
 
@@ -228,4 +190,39 @@ export function createBubble(expandable, clickX, convertLinksToExpandables) {
 
   // Finally, return this magnificent created Bubble!
   return bubble;
+}
+
+function getInheritedBackgroundColor(startElement, parentStyle) {
+  let bgColor = parentStyle.backgroundColor;
+  let currentElem = startElement.parentNode;
+  let failsafe = FAILSAFE_MAX;
+
+  while (bgColor === TRANSPARENT_RGBA && currentElem && currentElem.tagName && failsafe-- > 0) {
+    bgColor = window.getComputedStyle(currentElem).backgroundColor;
+    currentElem = currentElem.parentNode;
+  }
+
+  return bgColor === TRANSPARENT_RGBA ? DEFAULT_BG_COLOR : bgColor;
+}
+
+function calculateArrowLeft(expandable, clickX) {
+  let arrowCenter = clickX;
+
+  const paragraph = expandable.closest('p, .katex-display') || document.body;
+  const paragraphWidth = paragraph.getBoundingClientRect().width;
+
+  const container = paragraph.closest('.nutshell-bubble-overflow-section');
+  if (container) {
+    const sectionWidth = container.getBoundingClientRect().width;
+    const padding = (sectionWidth - paragraphWidth) / 2;
+    arrowCenter += padding;
+  }
+
+  const ARROW_MIN_PADDING = BUBBLE_RADIUS + ARROW_HALF_WIDTH;
+  const ARROW_MAX_PADDING = paragraphWidth - ARROW_MIN_PADDING;
+
+  if (arrowCenter < ARROW_MIN_PADDING) arrowCenter = ARROW_MIN_PADDING;
+  if (arrowCenter > ARROW_MAX_PADDING) arrowCenter = ARROW_MAX_PADDING;
+
+  return arrowCenter - ARROW_HALF_WIDTH;
 }

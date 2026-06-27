@@ -242,7 +242,7 @@ function calculateArrowLeft(expandable, clickX) {
     arrowCenter += padding;
   }
 
-  const bubbleWidth = container ? container.getBoundingClientRect().width - 6 : reflectedParagraphWidth;
+  const bubbleWidth = container ? container.getBoundingClientRect().width - 2 : reflectedParagraphWidth;
 
   const ARROW_MIN_PADDING = BUBBLE_RADIUS + ARROW_HALF_WIDTH;
   const ARROW_MAX_PADDING = bubbleWidth - ARROW_MIN_PADDING;

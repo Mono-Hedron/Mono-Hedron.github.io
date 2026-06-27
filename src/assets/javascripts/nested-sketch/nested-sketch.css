@@ -150,9 +150,9 @@ BUBBLES:
 }
 .nutshell-bubble-overflow-section .nutshell-bubble {
   /* So that recursive bubbles don't get squashed too quickly */
-  width: calc(100% + 2em - 6px); /* undo section's padding, minus a gap */
+  width: calc(100% + 2em - 2px); /* undo section's padding, minus a gap */
   position: relative;
-  right: calc(1em - 3px);
+  right: calc(1em - 1px);
 }
 
 /* <li> root bubble */
@@ -164,7 +164,7 @@ BUBBLES:
 }
 
 .nutshell-bubble-overflow-section .nutshell-bubble.ns-list-bubble {
-  width: calc(100% + 2em - 6px + 40px);
+  width: calc(100% + 2em - 2px + 40px);
 }
 
 /* From */

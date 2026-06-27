@@ -262,7 +262,12 @@ function addSource(url) {
     const thisPageURL = location.host + location.pathname;
 
     // Remove current page url.
-    const shortenedURL = targetWithoutProtocal.replace(thisPageURL, '');
+    const samePage = targetWithoutProtocal.includes(thisPageURL);
+    const shortenedURL = samePage
+      ? targetWithoutProtocal.replace(thisPageURL, '')
+      : targetURL.host === location.host
+        ? targetWithoutProtocal.split('/').at(-1)
+        : targetWithoutProtocal;
 
     // Create a document element.
     const p = document.createElement('p');
@@ -274,7 +279,6 @@ function addSource(url) {
     a.href = url;
     a.textContent = shortenedURL;
 
-    const samePage = targetWithoutProtocal.includes(thisPageURL);
     const hashID = targetURL.hash.replace('#', '');
 
     if (samePage && hashID) {

@@ -26,10 +26,11 @@
   --close-hover-bg: gainsboro;
   --bubble-padding: 1em;
   --nested-bubble-gap: 1px;
-  --list-padding: 40px;
+  --list-padding: 2.25em;
 }
 
-:where(main ol, main ul) {
+ol,
+ul {
   margin-inline-start: 0;
   padding-inline-start: var(--list-padding);
 }

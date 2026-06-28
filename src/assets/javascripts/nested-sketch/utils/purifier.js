@@ -9,7 +9,7 @@ export function purifyHTML(rawHTML, baseURL) {
   // Hook for class, id
   DOMPurify.addHook('afterSanitizeAttributes', (node) => {
     // Leave ns-link class
-    const ALLOWED_CLASSES = ['ns-link', 'ns-hidden'];
+    const ALLOWED_CLASSES = ['ns-link', 'ns-hidden', 'pc-only', 'mobile-only'];
 
     if (node.hasAttribute && node.hasAttribute('class')) {
       const filteredClasses = Array.from(node.classList).filter((className) => ALLOWED_CLASSES.includes(className));

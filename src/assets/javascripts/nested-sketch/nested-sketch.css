@@ -125,10 +125,7 @@ BUBBLES:
 .nutshell-bubble-overflow-section > div {
   margin: 1em 0; /* if you people forgot to put your text in <p>'s -_- */
 }
-/* [TEST] X-scroll */
-/* .nutshell-bubble-overflow-section > div > *:not(.nutshell-bubble-from){
-    overflow-x: auto;
-} */
+
 .nutshell-bubble-overflow-section img {
   max-width: 100%; /* so it fits */
 }
@@ -258,12 +255,6 @@ CLOSE ALL NUTSHELLS
   opacity: 0;
 }
 
-/* [MODIFIED] */
-/* [TEST] X-scroll */
-/* .katex {
-    overflow-x: auto;
-} */
-
 /* Make katex link focusable */
 .katex-html a.nutshell-link {
   position: relative !important;
@@ -365,4 +356,37 @@ CLOSE ALL NUTSHELLS
 
 .is-hidden {
   display: none;
+}
+
+@media screen and (min-width: 768px) {
+  .mobile-only {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .pc-only {
+    display: none;
+  }
+
+  /* Section */
+  .nutshell-bubble-overflow-section {
+    padding: 0 0.5em;
+  }
+  /* Total hack for nice styling */
+  .nutshell-bubble-overflow-section img[data-float='left'] {
+    float: left;
+    margin: 0.5em;
+  }
+  .nutshell-bubble-overflow-section img[data-float='right'] {
+    float: right;
+    margin: 0.5em;
+  }
+  .nutshell-bubble-overflow-section .nutshell-bubble {
+    width: calc(100% + 1em - 2px); /* undo section's padding, minus a gap */
+    right: calc(0.5em - 1px);
+  }
+  .nutshell-bubble-overflow-section .nutshell-bubble.ns-list-bubble {
+    width: calc(100% + 1em - 2px + 40px);
+  }
 }

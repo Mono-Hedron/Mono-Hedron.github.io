@@ -30,12 +30,21 @@
     </p>
     <ol data-flush-left="0">
       <li>$W$는 $V$의 <a href="/linear-algebra/subspace#definition" class="ns-link">부분공간</a>이다.</li>
-      <!-- prettier-ignore -->
       <li>
-        $$\left( \forall \mathbf{u}, \mathbf{v} \in W, \quad \mathbf{u}+\mathbf{v} \in W \right)$$ 
-        $$\;\land\;$$ 
-        $$\left(\forall \mathbf{u} \in W, \; \forall k \in F, \quad k\mathbf{u} \in W \right)
-        \tag{\href{/linear-algebra/subspace#equivalence-proof}{\text{증명}}}$$
+        <!-- prettier-ignore -->
+        <span>
+          $$ \begin{aligned}
+          \left( \forall \mathbf{u}, \mathbf{v} \in W, \quad \mathbf{u}+\mathbf{v} \in W \right) 
+          \allowbreak
+          
+          \;\land\;
+          \allowbreak
+          
+          \left(\forall \mathbf{u} \in W, \; \forall k \in F, \quad k\mathbf{u} \in W \right)
+          \tag{\href{/linear-algebra/subspace#equivalence-proof}{\text{증명}}}
+          \end{aligned} $$
+        </span>
+
         <span id="equivalence-2-1" class="ns-hidden">
           $$\forall \mathbf{u}, \mathbf{v} \in W, \quad \mathbf{u}+\mathbf{v} \in W$$
         </span>
@@ -70,9 +79,9 @@
 
         \href{/linear-algebra/subspace#equivalence-2-2}{\implies} & 0\mathbf{w} \in W \; \land \; 0\mathbf{w} \in V \\ 
 
-        \href{/linear-algebra/vector-space#property-1}{\implies} & \mathbf{0} \in W \\ 
-        
-        & \text{s.t.} \quad \forall \mathbf{u} \in W \quad \mathbf{u}+\mathbf{0}=\mathbf{u} \\
+        \href{/linear-algebra/vector-space#property-1}{\implies} & \mathbf{0} \in W \quad
+        \allowbreak
+        \text{s.t.} \quad \forall \mathbf{u} \in W \quad \mathbf{u}+\mathbf{0}=\mathbf{u} \\
 
         \end{aligned} $$
       </span>
@@ -84,14 +93,14 @@
         $$ \forall \mathbf{u} \in W, \; \forall k \in F, \quad k\mathbf{u} \in W $$
         $$ \begin{aligned} 
 
-        \implies & \forall \mathbf{u} \in W, \\
-        
-        & (-1)\mathbf{u} \in W \; \land \; (-1)\mathbf{u} \in V \\
+        \implies & \forall \mathbf{u} \in W, \quad
+        \allowbreak
+        (-1)\mathbf{u} \in W \; \land \; (-1)\mathbf{u} \in V \\
 
         \href{/linear-algebra/vector-space#property-3}{\implies} 
-        &\forall \mathbf{u} \in W, \quad -\mathbf{u} \in W \\
-        
-        & \text{s.t.} \quad \mathbf{u}+(-\mathbf{u})=\mathbf{0} \\
+        &\forall \mathbf{u} \in W, \quad -\mathbf{u} \in W \quad
+        \allowbreak
+        \text{s.t.} \quad \mathbf{u}+(-\mathbf{u})=\mathbf{0} \\
         
         \end{aligned} $$
       </span>

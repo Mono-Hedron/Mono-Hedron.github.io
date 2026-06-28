@@ -1,6 +1,6 @@
-export function katexAlignedToPhantomPlugin() {
+export function katexCustomAlignedPlugin() {
   return {
-    name: 'katex-aligned-to-phantom',
+    name: 'katex-custom-aligned',
     transformIndexHtml(code) {
       const alignedRegex = /\$\$\s*\\begin\{aligned\}([\s\S]*?)\\end\{aligned\}\s*\$\$/g;
       const mobileMarker = /\\allowbreak/g;

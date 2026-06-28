@@ -3,7 +3,7 @@ import { join, dirname, relative } from 'path';
 import { readdirSync, statSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { ViteEjsPlugin } from 'vite-plugin-ejs';
-import { katexAlignedToPhantomPlugin } from './katex-aligned-to-phantom.js';
+import { katexCustomAlignedPlugin } from './katex-custom-aligned.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -33,7 +33,7 @@ export default defineConfig({
   root: srcDir,
   publicDir: join(__dirname, 'public'),
   plugins: [
-    katexAlignedToPhantomPlugin(),
+    katexCustomAlignedPlugin(),
     ViteEjsPlugin((_viteConfig) => {
       return {
         fromComponents: (...paths) => join(compDir, ...paths),

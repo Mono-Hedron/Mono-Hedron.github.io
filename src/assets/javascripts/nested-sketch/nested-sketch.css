@@ -79,7 +79,8 @@ BUBBLES:
 .nutshell-bubble {
   /* Gon' stretch out */
   display: inline-block;
-  width: 100%;
+  margin-left: var(--bubble-dynamic-offset, 0px);
+  width: var(--bubble-dynamic-width, 100%);
 
   /* It's nice & speech-bubble-lookin' */
   border: 1px solid var(--bubble-border-color);
@@ -180,25 +181,6 @@ BUBBLES:
 }
 .nutshell-bubble-overflow-section iframe {
   border: 1px solid rgba(0, 0, 0, 0.2);
-}
-.nutshell-bubble-overflow-section .nutshell-bubble {
-  /* So that recursive bubbles don't get squashed too quickly */
-  width: calc(
-    100% + var(--bubble-padding) * 2 - var(--nested-bubble-gap) * 2
-  ); /* undo section's padding, minus a gap */
-  position: relative;
-  right: calc(var(--bubble-padding) - var(--nested-bubble-gap));
-}
-
-.nutshell-bubble-overflow-section .nutshell-bubble.ns-list-bubble {
-  width: calc(100% + var(--bubble-padding) * 2 - var(--nested-bubble-gap) * 2 + var(--list-padding));
-}
-
-/* <li> root bubble */
-.nutshell-bubble.ns-list-bubble {
-  display: block;
-  width: auto;
-  margin-left: calc(0px - var(--list-padding));
 }
 
 /* From */

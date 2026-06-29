@@ -17,7 +17,7 @@ const FAILSAFE_MAX = 10;
 // ⭐️ Create & return bubble, using an expandable's data
 /////////////////////////////////////////////////////////////////////
 
-export function createBubble(expandable, clickX, convertLinksToExpandables) {
+export function createBubble(bubbleParent, expandable, clickX, convertLinksToExpandables) {
   /**************************
 
     BUBBLE ELEMENT & ANIMATION STRUCTURE
@@ -47,9 +47,6 @@ export function createBubble(expandable, clickX, convertLinksToExpandables) {
   // Make a bubble container!
   let bubble = document.createElement('div');
   bubble.className = 'nutshell-bubble';
-  if (getListRoot(expandable)) {
-    bubble.classList.add('ns-list-bubble');
-  }
 
   Object.assign(bubble.style, {
     top: '0px',
@@ -64,11 +61,16 @@ export function createBubble(expandable, clickX, convertLinksToExpandables) {
     background: bgColor,
   });
 
+  const result = calculateBubblePosition(bubbleParent, expandable);
+
+  bubble.style.setProperty('--bubble-dynamic-offset', `-${result.leftIndent}px`);
+  bubble.style.setProperty('--bubble-dynamic-width', `${result.bubbleWidth}px`);
+
   const arrow = document.createElement('div');
   arrow.className = 'nutshell-bubble-arrow';
   arrow.style.borderBottomColor = parentNodeStyle.color;
   arrow.style.setProperty('--arrow-background', bgColor);
-  arrow.style.left = `${calculateArrowLeft(expandable, clickX)}px`;
+  arrow.style.left = `${calculateArrowLeft(clickX, result.bubbleLeft, result.bubbleWidth)}px`;
   bubble.appendChild(arrow);
 
   // The Overflow container
@@ -196,20 +198,37 @@ export function createBubble(expandable, clickX, convertLinksToExpandables) {
 }
 
 /**
- * Get the direct ancestor \<ol\>, \<ul\> of the expandable.
- * Return null if a bubble exists between them.
  *
+ * @param {Element} bubbleParent
  * @param {Element} expandable
- * @returns Element | null
+ * @returns
  */
-function getListRoot(expandable) {
-  const closestList = expandable.closest('ol, ul');
-  if (!closestList) return null;
+function calculateBubblePosition(bubbleParent, expandable) {
+  // Container
+  const container = expandable.closest('.nutshell-bubble-overflow') || document.body;
 
-  const closestBubble = expandable.closest('.nutshell-bubble-overflow-section');
-  if (!closestBubble || closestBubble.contains(closestList)) return closestList;
+  const containerStyle = window.getComputedStyle(container);
+  const paddingLeft = parseFloat(containerStyle.paddingLeft) || 0;
+  const paddingRight = parseFloat(containerStyle.paddingRight) || 0;
 
-  return null;
+  const containerRect = container.getBoundingClientRect();
+
+  const containerLeft = containerRect.left + paddingLeft;
+  const containerWidth = containerRect.width - paddingLeft - paddingRight;
+
+  // Parent offset
+  const parentRect = bubbleParent.getBoundingClientRect();
+  const offsetLeft = parentRect.left - containerLeft;
+
+  // Bubble Gap
+  const nestedBubbleGap = parseFloat(containerStyle.getPropertyValue('--nested-bubble-gap')) || 0;
+  const bubbleGap = container === document.body ? 0 : nestedBubbleGap;
+
+  return {
+    bubbleLeft: containerLeft,
+    leftIndent: offsetLeft - bubbleGap,
+    bubbleWidth: containerWidth - bubbleGap * 2,
+  };
 }
 
 function getInheritedBackgroundColor(startElement, parentStyle) {
@@ -225,24 +244,8 @@ function getInheritedBackgroundColor(startElement, parentStyle) {
   return bgColor === TRANSPARENT_RGBA ? DEFAULT_BG_COLOR : bgColor;
 }
 
-function calculateArrowLeft(expandable, clickX) {
-  const listRoot = getListRoot(expandable);
-  const listPadding = listRoot ? parseInt(window.getComputedStyle(listRoot).paddingLeft, 10) : 0;
-
-  let arrowCenter = clickX + listPadding;
-
-  const paragraph = expandable.closest('p, li, h6, .katex-display') || document.body;
-  const paragraphWidth = paragraph.getBoundingClientRect().width;
-  const reflectedParagraphWidth = paragraphWidth + listPadding;
-
-  const container = paragraph.closest('.nutshell-bubble-overflow-section');
-  if (container?.contains(paragraph)) {
-    const containerWidth = container.getBoundingClientRect().width;
-    const padding = (containerWidth - reflectedParagraphWidth) / 2;
-    arrowCenter += padding;
-  }
-
-  const bubbleWidth = container ? container.getBoundingClientRect().width - 2 : reflectedParagraphWidth;
+function calculateArrowLeft(clickX, bubbleLeft, bubbleWidth) {
+  let arrowCenter = clickX - bubbleLeft;
 
   const ARROW_MIN_PADDING = BUBBLE_RADIUS + ARROW_HALF_WIDTH;
   const ARROW_MAX_PADDING = bubbleWidth - ARROW_MIN_PADDING;

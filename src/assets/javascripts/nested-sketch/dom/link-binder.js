@@ -8,10 +8,10 @@ import { getLocalizedText } from '../core/internationalization.js';
 /////////////////////////////////////////////////////////////////////
 function bindExpandable(el, strategies = {}) {
   const {
-    getClickX, // Click X coordinate custom calculation
     insertBubble, // Custom bubble insertion place
     onOpen,
     onClose,
+    bubbleParent,
   } = strategies;
 
   el.classList.add('nutshell-expandable');
@@ -25,9 +25,8 @@ function bindExpandable(el, strategies = {}) {
     el.isOpen = true;
 
     // Insert a bubble
-    let clickX = getClickX ? getClickX(mouseEvent, el) : mouseEvent.clientX - el.parentNode.getBoundingClientRect().x;
 
-    el.bubble = createBubble(el, clickX, convertLinksToExpandables);
+    el.bubble = createBubble(bubbleParent, el, mouseEvent.clientX, convertLinksToExpandables);
 
     if (insertBubble) {
       insertBubble(el.bubble, el);
@@ -131,14 +130,14 @@ export function convertLinksToExpandables(dom, _forThisElement) {
     const followupSpan = createFollowUpHTML(ex, punctuation);
 
     bindExpandable(ex, {
-      getClickX: (e, el) => e.clientX - el.parentNode.getBoundingClientRect().x,
-
       insertBubble: (bubble, el) => {
         el.parentNode.insertBefore(bubble, punctuation.nextSibling);
       },
 
       onOpen: followupSpan ? () => ex.updateFollowupText() : null,
       onClose: followupSpan ? () => setTimeout(ex.updateFollowupText, ANIM_TIME) : null,
+
+      bubbleParent: ex.parentNode,
     });
   });
 
@@ -148,12 +147,6 @@ export function convertLinksToExpandables(dom, _forThisElement) {
     mathLink.classList.add('ns-link');
 
     bindExpandable(mathLink, {
-      getClickX: (e, el) => {
-        const mathWrapper = el.closest('.katex') ?? el;
-        const containerRect = mathWrapper.parentNode.getBoundingClientRect();
-        return e.clientX - containerRect.left;
-      },
-
       insertBubble: (bubble, el) => {
         const mathWrapper = el.closest('.katex') ?? el;
         mathWrapper.parentNode.insertBefore(bubble, mathWrapper.nextSibling);
@@ -161,6 +154,8 @@ export function convertLinksToExpandables(dom, _forThisElement) {
 
       onOpen: null,
       onClose: null,
+
+      bubbleParent: (mathLink.closest('.katex') ?? mathLink).parentNode,
     });
 
     // Place prior whitespace in front of the link.

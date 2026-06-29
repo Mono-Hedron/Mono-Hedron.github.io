@@ -18,7 +18,6 @@
     </p>
     <ol data-flush-left="0">
       <li>$$W \subseteq V$$</li>
-      <li>$$W \neq \emptyset$$</li>
       <li>$W$는 $V$의 스칼라곱과 덧셈이 정의된 벡터공간이다.</li>
     </ol>
 
@@ -26,42 +25,37 @@
     <p>
       $W \subseteq V$가
       <a href="/linear-algebra/vector-space#vector-space-axioms" class="ns-link">벡터공간</a>
-      $V$의 공집합이 아닌 부분집합일 때, 다음은 동치이다.
+      $V$의 부분집합일 때, 다음은 동치이다.
     </p>
     <ol data-flush-left="0">
       <li>$W$는 $V$의 <a href="/linear-algebra/subspace#definition" class="ns-link">부분공간</a>이다.</li>
       <li>
-        <!-- prettier-ignore -->
-        <span>
-          $$ \begin{aligned}
-          \left( \forall \mathbf{u}, \mathbf{v} \in W, \quad \mathbf{u}+\mathbf{v} \in W \right) 
-          \allowbreak
-          
-          \;\land\;
-          \allowbreak
-          
-          \left(\forall \mathbf{u} \in W, \; \forall k \in F, \quad k\mathbf{u} \in W \right)
-          \tag{\href{/linear-algebra/subspace#equivalence-proof}{\text{증명}}}
-          \end{aligned} $$
-        </span>
-
-        <span id="equivalence-2-1" class="ns-hidden">
-          $$\forall \mathbf{u}, \mathbf{v} \in W, \quad \mathbf{u}+\mathbf{v} \in W$$
-        </span>
-        <span id="equivalence-2-2" class="ns-hidden">
-          $$\forall \mathbf{u} \in W, \; \forall k \in F, \quad k\mathbf{u} \in W $$
-        </span>
+        <ol type="a">
+          <li>$$W \neq \emptyset$$</li>
+          <li id="equivalence-2-1">$$\forall \mathbf{u}, \mathbf{v} \in W, \quad \mathbf{u}+\mathbf{v} \in W$$</li>
+          <li id="equivalence-2-2">
+            $$\forall \mathbf{u} \in W, \; \forall k \in F, \quad k\mathbf{u} \in W
+            \tag{\href{/linear-algebra/subspace#equivalence-proof}{\text{증명}}}$$
+          </li>
+        </ol>
       </li>
     </ol>
     <h5 id="equivalence-proof" class="ns-hidden">필요충분조건 증명</h5>
     <p>
       $(1) \implies (2)$:
       <a href="/linear-algebra/subspace#definition" class="ns-link">정의</a>에 따라, $W$는
-      <a href="/linear-algebra/vector-space#vector-space-axioms" class="ns-link">벡터공간</a>이다. $W$는 벡터공간 공리
-      <a href="/linear-algebra/vector-space#axiom-1" class="ns-link">1</a>,
-      <a href="/linear-algebra/vector-space#axiom-6" class="ns-link">6</a>을 만족한다. 따라서 $W$는 $(2)$의 두 조건을
-      만족한다.
+      <a href="/linear-algebra/vector-space#vector-space-axioms" class="ns-link">벡터공간</a>이다. 벡터공간 공리에 따라,
     </p>
+    <ol type="a">
+      <li>$W$는 공집합이 아니다.</li>
+      <li>
+        $W$는 벡터공간 공리
+        <a href="/linear-algebra/vector-space#axiom-1" class="ns-link">1</a>을 만족한다.
+      </li>
+      <li>$W$는 벡터공간 공리 <a href="/linear-algebra/vector-space#axiom-6" class="ns-link">6</a>을 만족한다.</li>
+    </ol>
+    따라서 $W$는 $(2)$의 세 조건을 만족한다.
+
     <p>
       $(2) \implies (1)$: $W \subseteq V$가 벡터공간 $V$의 공집합이 아닌 부분집합이므로, $\forall \mathbf{u} \in W,
       \quad \mathbf{u} \in V$이다. 따라서 $W$는 벡터공간 공리 2, 3, 7, 8, 9, 10을 만족한다. 조건에 따라, $W$는 벡터공간

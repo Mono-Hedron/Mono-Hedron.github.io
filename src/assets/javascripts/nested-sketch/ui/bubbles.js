@@ -4,11 +4,15 @@ import state, { ANIM_TIME } from '../core/state.js';
 import { updateCloseAllNutshells } from './close-all.js';
 
 // constants
+const rootStyle = window.getComputedStyle(document.documentElement);
+
+const BUBBLE_RADIUS = parseFloat(rootStyle.getPropertyValue('--bubble-radius')) || 20;
+const ARROW_HALF_WIDTH = parseFloat(rootStyle.getPropertyValue('--arrow-half-width')) || 20;
+
 const OFFSET_Y = '-5px';
 const DEFAULT_BG_COLOR = '#fff';
 const TRANSPARENT_RGBA = 'rgba(0, 0, 0, 0)';
-const ARROW_HALF_WIDTH = 20;
-const BUBBLE_RADIUS = 20;
+
 const LOADING_DOTS_START = 10;
 const LOADING_DOTS_INTERVAL = 1000;
 const FAILSAFE_MAX = 10;

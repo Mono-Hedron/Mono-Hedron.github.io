@@ -26,6 +26,8 @@
   --close-hover-bg: gainsboro;
   --bubble-padding: 1em;
   --nested-bubble-gap: 1px;
+  --bubble-radius: 20px;
+  --arrow-half-width: 20px;
 }
 
 /* flush-left */
@@ -77,7 +79,7 @@ BUBBLES:
 
   /* It's nice & speech-bubble-lookin' */
   border: 1px solid var(--bubble-border-color);
-  border-radius: 20px;
+  border-radius: var(--bubble-radius);
   box-sizing: border-box;
 
   /* For the speech-bubble arrow */
@@ -114,11 +116,11 @@ BUBBLES:
 .nutshell-bubble-arrow {
   width: 0;
   height: 0;
-  border-left: 20px solid transparent;
-  border-right: 20px solid transparent;
-  border-bottom: 20px solid var(--bubble-border-color);
+  border-left: var(--arrow-half-width) solid transparent;
+  border-right: var(--arrow-half-width) solid transparent;
+  border-bottom: var(--arrow-half-width) solid var(--bubble-border-color);
   position: absolute;
-  top: -20px;
+  top: calc(0px - var(--arrow-half-width));
   pointer-events: none; /* don't block clicking */
 }
 
@@ -127,12 +129,12 @@ BUBBLES:
   content: '';
   width: 0;
   height: 0;
-  border-left: 20px solid transparent;
-  border-right: 20px solid transparent;
-  border-bottom: 20px solid var(--arrow-background);
+  border-left: var(--arrow-half-width) solid transparent;
+  border-right: var(--arrow-half-width) solid transparent;
+  border-bottom: var(--arrow-half-width) solid var(--arrow-background);
   position: absolute;
   top: 1.5px;
-  left: -20px;
+  left: calc(0px - var(--arrow-half-width));
   pointer-events: none; /* don't block clicking */
 }
 
@@ -140,8 +142,8 @@ BUBBLES:
 .nutshell-bubble-overflow {
   overflow: hidden;
   /* [Modified] Mask close button border */
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: var(--bubble-radius);
+  border-bottom-right-radius: var(--bubble-radius);
 }
 .nutshell-bubble-overflow[mode='opening'] {
   transition: height 0.3s ease-out; /* Snap to open */

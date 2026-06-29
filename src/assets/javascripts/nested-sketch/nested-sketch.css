@@ -75,7 +75,7 @@ BUBBLES:
   /* Gon' stretch out */
   display: inline-block;
   margin-left: var(--bubble-dynamic-offset, 0px);
-  width: var(--bubble-dynamic-width, 100%);
+  width: calc(100% + var(--bubble-dynamic-width-increment, 0px));
 
   /* It's nice & speech-bubble-lookin' */
   border: 1px solid var(--bubble-border-color);

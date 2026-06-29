@@ -4,11 +4,6 @@ import state, { ANIM_TIME } from '../core/state.js';
 import { updateCloseAllNutshells } from './close-all.js';
 
 // constants
-const rootStyle = window.getComputedStyle(document.documentElement);
-
-const BUBBLE_RADIUS = parseFloat(rootStyle.getPropertyValue('--bubble-radius')) || 20;
-const ARROW_HALF_WIDTH = parseFloat(rootStyle.getPropertyValue('--arrow-half-width')) || 20;
-
 const OFFSET_Y = '-5px';
 const DEFAULT_BG_COLOR = '#fff';
 const TRANSPARENT_RGBA = 'rgba(0, 0, 0, 0)';
@@ -66,9 +61,9 @@ export function createBubble(bubbleParent, expandable, clickX, convertLinksToExp
   });
 
   const result = calculateBubblePosition(bubbleParent, expandable);
-
+  // Negative margin value for reverting the indentation.
   bubble.style.setProperty('--bubble-dynamic-offset', `-${result.leftIndent}px`);
-  bubble.style.setProperty('--bubble-dynamic-width', `${result.bubbleWidth}px`);
+  bubble.style.setProperty('--bubble-dynamic-width-increment', `${result.bubbleWidthIncrement}px`);
 
   const arrow = document.createElement('div');
   arrow.className = 'nutshell-bubble-arrow';
@@ -228,10 +223,12 @@ function calculateBubblePosition(bubbleParent, expandable) {
   const nestedBubbleGap = parseFloat(containerStyle.getPropertyValue('--nested-bubble-gap')) || 0;
   const bubbleGap = container === document.body ? 0 : nestedBubbleGap;
 
+  const bubbleWidth = containerWidth - bubbleGap * 2;
   return {
     bubbleLeft: containerLeft,
     leftIndent: offsetLeft - bubbleGap,
-    bubbleWidth: containerWidth - bubbleGap * 2,
+    bubbleWidth: bubbleWidth,
+    bubbleWidthIncrement: bubbleWidth - parentRect.width,
   };
 }
 
@@ -249,6 +246,11 @@ function getInheritedBackgroundColor(startElement, parentStyle) {
 }
 
 function calculateArrowLeft(clickX, bubbleLeft, bubbleWidth) {
+  const rootStyle = window.getComputedStyle(document.documentElement);
+
+  const BUBBLE_RADIUS = parseFloat(rootStyle.getPropertyValue('--bubble-radius')) || 20;
+  const ARROW_HALF_WIDTH = parseFloat(rootStyle.getPropertyValue('--arrow-half-width')) || 20;
+
   let arrowCenter = clickX - bubbleLeft;
 
   const ARROW_MIN_PADDING = BUBBLE_RADIUS + ARROW_HALF_WIDTH;

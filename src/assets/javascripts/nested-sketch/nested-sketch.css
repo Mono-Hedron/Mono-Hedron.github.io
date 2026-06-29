@@ -257,13 +257,11 @@ CLOSE ALL NUTSHELLS
   display: inline-block;
 }
 
-/*  */
-/* Flush-left rule */
-/*  */
-
-/* Default center alignment */
-
-/* Initialize on new bubble */
+/* Because of .katex-display's bottom margin, insert bubble in it. */
+/* eslint-disable-next-line css/use-baseline */
+.katex-display:has(+ .nutshell-bubble) {
+  margin-bottom: 0px;
+}
 
 /* Apply */
 :is(.nutshell-bubble, body) .katex-display > .katex {

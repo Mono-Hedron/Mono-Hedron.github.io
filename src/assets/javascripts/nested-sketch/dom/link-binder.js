@@ -29,7 +29,7 @@ function bindExpandable(el, strategies = {}) {
     el.bubble = createBubble(bubbleParent, el, mouseEvent.clientX, convertLinksToExpandables);
 
     if (insertBubble) {
-      insertBubble(el.bubble, el);
+      insertBubble(el.bubble);
     } else {
       el.parentNode.insertBefore(el.bubble, extractPunctuation(el).nextSibling);
     }
@@ -128,16 +128,17 @@ export function convertLinksToExpandables(dom, _forThisElement) {
   dom.querySelectorAll('a.ns-link:not(.katex-html *)').forEach((ex) => {
     const punctuation = extractPunctuation(ex);
     const followupSpan = createFollowUpHTML(ex, punctuation);
+    const bubbleParent = ex.parentNode;
 
     bindExpandable(ex, {
-      insertBubble: (bubble, el) => {
-        el.parentNode.insertBefore(bubble, punctuation.nextSibling);
+      insertBubble: (bubble) => {
+        bubbleParent.insertBefore(bubble, punctuation.nextSibling);
       },
 
       onOpen: followupSpan ? () => ex.updateFollowupText() : null,
       onClose: followupSpan ? () => setTimeout(ex.updateFollowupText, ANIM_TIME) : null,
 
-      bubbleParent: ex.parentNode,
+      bubbleParent: bubbleParent,
     });
   });
 
@@ -146,16 +147,19 @@ export function convertLinksToExpandables(dom, _forThisElement) {
     // for consistency
     mathLink.classList.add('ns-link');
 
+    const katex = mathLink.closest('.katex') ?? mathLink;
+    const mathWrapper = katex.parentElement?.classList.contains('katex-display') ? katex.parentElement : katex;
+    const bubbleParent = mathWrapper.parentNode;
+
     bindExpandable(mathLink, {
-      insertBubble: (bubble, el) => {
-        const mathWrapper = el.closest('.katex') ?? el;
-        mathWrapper.parentNode.insertBefore(bubble, mathWrapper.nextSibling);
+      insertBubble: (bubble) => {
+        bubbleParent.insertBefore(bubble, mathWrapper.nextSibling);
       },
 
       onOpen: null,
       onClose: null,
 
-      bubbleParent: (mathLink.closest('.katex') ?? mathLink).parentNode,
+      bubbleParent: bubbleParent,
     });
 
     // Place prior whitespace in front of the link.
@@ -163,17 +167,6 @@ export function convertLinksToExpandables(dom, _forThisElement) {
     moveMspaceSiblings(mathLink, 'lastElementChild', (child) =>
       mathLink.parentElement.insertBefore(child, mathLink.nextSibling)
     );
-    // while (mathLink.firstElementChild?.classList.contains('mspace')) {
-    //   const child = mathLink.firstElementChild;
-    //   mathLink.removeChild(child);
-    //   mathLink.parentElement.insertBefore(child, mathLink);
-    // }
-    // // Place post whitespace after the link.
-    // while (mathLink.lastElementChild?.classList.contains('mspace')) {
-    //   const child = mathLink.lastElementChild;
-    //   mathLink.removeChild(child);
-    //   mathLink.parentElement.insertBefore(child, mathLink.nextSibling);
-    // }
 
     // [TEST] aria-hidden removal
     const container = mathLink.closest('.katex-html');
